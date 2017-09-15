@@ -26,12 +26,15 @@ namespace LakeLabRemote
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = Configuration["Data:LakeLabRemoteIdentity:ConnectionString"];
+
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseMySql(Configuration["Data:LakeLabRemoteIdentity:ConnectionString"]));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseMySql(connectionString));
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
+            services.AddDbContext<DevicesDbContext>(options => options.UseMySql(connectionString));
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Location";
+}
+@model List<Device>
+
+<div class="panel-body bg-primary "><h4>Sensoren</h4></div>
+<table class="table table-condensed table-bordered">
+    <tr><th>Gerät</th><th>Ort</th><th>Tiefe</th></tr>
+    @if (Model.Count == 0)
+    {
+        <tr><td colspan="3" class="text-center">Keine Geräte eingetragen.</td></tr>
+
+    }
+    else
+    {
+        @foreach (Device device in Model)
+        {
+            <tr><td>@device.Name</td><td>@device.Location</td><td>@device.Depth</td></tr>
+        }
+    }
+</table>
+
+
