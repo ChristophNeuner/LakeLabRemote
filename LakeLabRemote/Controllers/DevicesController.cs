@@ -11,10 +11,10 @@ using LakeLabRemote.Models;
 namespace LakeLabRemote.Controllers
 {
     [Authorize(Roles = "Admins")]
-    public class LocationController : Controller
+    public class DevicesController : Controller
     {
         private DevicesDbContext dLDbContext;
-        public LocationController(DevicesDbContext dLDb)
+        public DevicesController(DevicesDbContext dLDb)
         {
             dLDbContext = dLDb;
         }
