@@ -10,6 +10,21 @@ namespace LakeLabRemote.Models
 {
     public class Device
     {
+        public Device() { }
+
+        public Device(string name, string location, string depth)
+        {
+            if (string.IsNullOrEmpty(nameof(name)))
+                throw new NullReferenceException("Name must not be null or empty.");
+            if (string.IsNullOrEmpty(nameof(location)))
+                throw new NullReferenceException("Location must not be null or empty.");
+            if (string.IsNullOrEmpty(nameof(depth)))
+                throw new NullReferenceException("Depth must not be null or empty.");
+            Name = name;
+            Location = location;
+            Depth = depth;
+        }
+
         [Key]
         public string Name { get; set; }
         public string Location { get; set; }

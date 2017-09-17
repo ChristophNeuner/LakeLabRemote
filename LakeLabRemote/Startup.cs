@@ -35,6 +35,7 @@ namespace LakeLabRemote
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
             services.AddDbContext<DevicesDbContext>(options => options.UseMySql(connectionString));
+            services.AddSingleton<DevicesDbContext>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

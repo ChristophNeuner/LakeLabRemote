@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Location";
+    ViewData["Title"] = "Geräte";
 }
 @model List<Device>
 
@@ -14,7 +14,15 @@
     {
         @foreach (Device device in Model)
         {
-            <tr><td>@device.Name</td><td>@device.Location</td><td>@device.Depth</td></tr>
+            <tr>
+                <td>@device.Name</td><td>@device.Location</td><td>@device.Depth</td>
+                <td>
+                    <form asp-action="Delete" method="post" asp-route-id="@device.Name">
+                        <a asp-action="Edit" asp-route-id="@device.Name" class="btn btn-primary btn-sm">Edit</a>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
         }
     }
 </table>

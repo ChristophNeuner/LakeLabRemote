@@ -1,0 +1,26 @@
+﻿@{ 
+    ViewData["Title"] = "Create Device";
+}
+@model CreateDeviceViewModel
+
+<div class="bg-primary panel-body"><h4>Create Device</h4></div>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post" asp-action="CreateDevice">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Location">Ort</label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Depth">Tiefe</label>
+        <br />
+        <input asp-for="Depth" type="radio" value="surface"/> Oberfläche
+        <br />
+        <input asp-for="Depth" type="radio" value="ground"/> Grund
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-default">Cancel</a>
+</form>
