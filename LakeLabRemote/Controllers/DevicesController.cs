@@ -55,5 +55,16 @@ namespace LakeLabRemote.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //public IActionResult Edit(string id)
+        //{
+
+        //}
+
+        //[HttpPost]
+        //public IActionResult Edit(string name, string location, string depth)
+        //{
+
+        //}
+
     }
 }
