@@ -49,22 +49,42 @@ namespace LakeLabRemote.Controllers
         [HttpPost]
         public IActionResult Delete(string id)
         {
-            Models.Device device = devicesDbContext.Devices.ToList().Find(elem => elem.Name == id);
+            Device device = devicesDbContext.Devices.ToList().Find(elem => elem.Name == id);
             devicesDbContext.Remove(device);
             devicesDbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
-        //public IActionResult Edit(string id)
-        //{
+        public IActionResult Edit(string id)
+        {
+            Device device = new Device();
+            if(string.IsNullOrEmpty(id))
+            {
+                ModelState.AddModelError("", "The device no longer exists.");
+            }
+            else
+            {
+                device = devicesDbContext.Devices.First(d => d.Name == id);
+                if(device == null)
+                {
+                    ModelState.AddModelError("", "The device no longer exists.");
+                }
+            }
+            if(ModelState.IsValid)
+            {
+                return View(device);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
-        //}
-
-        //[HttpPost]
-        //public IActionResult Edit(string name, string location, string depth)
-        //{
-
-        //}
+        [HttpPost]
+        public IActionResult Edit(Device device)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

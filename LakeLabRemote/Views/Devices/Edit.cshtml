@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{ 
+    ViewData["Title"] = "Edit Device";
 }
+@model Device
+
+<div class="bg-primary panel-body"><h4>Edit Device</h4></div>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" disabled />
+    </div>
+    <div class="form-group">
+        <label asp-for="Location"></label>
+        <input asp-for="Location" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Depth">Tiefe</label>
+        <br />
+        <input asp-for="Depth" type="radio" value="surface" /> Oberfläche
+        <br />
+        <input asp-for="Depth" type="radio" value="ground" /> Grund
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-default">Cancel</a>
+</form>
