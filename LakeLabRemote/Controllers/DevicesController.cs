@@ -81,9 +81,14 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Device device)
+        public IActionResult Edit(string Name, string Location, string Depth)
         {
-            throw new NotImplementedException();
+           Device device = devicesDbContext.Devices.First(d => d.Name == Name);
+            device.Name = Name;
+            device.Location = Location;
+            device.Depth = Depth;
+            devicesDbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
     }

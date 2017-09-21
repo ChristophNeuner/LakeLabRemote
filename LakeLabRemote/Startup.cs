@@ -34,6 +34,8 @@ namespace LakeLabRemote
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
             services.AddDbContext<DevicesDbContext>(options => options.UseMySql(connectionString));
             services.AddSingleton<DevicesDbContext>();
+            services.AddDbContext<ValuesDbContext>(options => options.UseMySql(connectionString));
+            services.AddSingleton<ValuesDbContext>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

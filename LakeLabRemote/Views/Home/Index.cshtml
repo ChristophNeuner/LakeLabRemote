@@ -2,6 +2,11 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>
-    Herzlich Willkommen
-</h1>
+@model List<Test>
+
+@foreach(Test elem in Model)
+{
+    <p>@elem.Value</p>
+    <br />
+    <br />
+}
