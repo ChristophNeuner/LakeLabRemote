@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace LakeLabRemote.Controllers
 {
-    [Authorize(Roles = "Admins")]
+    //[Authorize(Roles = "Admins")]
     public class ValuesController : Controller
     {
         ValuesDbContext valuesDbContext;
@@ -20,11 +20,11 @@ namespace LakeLabRemote.Controllers
         {
             valuesDbContext = context;
         }
-        public string Index(string value)
+        public string Index(JsonObject value)
         {
-            if (!string.IsNullOrEmpty(value))
+            if (value != null)
             {
-                valuesDbContext.Test.Add(new Test {Id = Guid.NewGuid().ToString(), Value = value });
+                valuesDbContext.Test.Add(new Test {Id = Guid.NewGuid().ToString(), Value = value.ToString()});
                 valuesDbContext.SaveChanges();
                 return "success";
             }
