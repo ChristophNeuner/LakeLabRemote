@@ -11,17 +11,20 @@ namespace LakeLabRemote.Models
         protected Guid _guid;
         protected DateTime _timestamp;
         protected Device _device;
-        protected Value(DateTime timestamp, Device device)
+        protected int _data;
+        protected Value(DateTime timestamp, Device device, int data)
         {
             _guid = new Guid();
             _timestamp = timestamp;
             _device = device;
+            _data = data;
         }
 
         [Key]
         public Guid Guid { get { return _guid; } set { _guid = value; } }
         public DateTime Timestamp { get { return _timestamp; } set { _timestamp = value; } }
         public Device Device { get { return _device; } set { _device = value; } }
+        public int Data { get { return _data; } set { _data = value; } }
     }
 
 
@@ -29,13 +32,7 @@ namespace LakeLabRemote.Models
     /// Class for a dissolved oxygen value.
     /// </summary>
     public class ValueDO : Value
-    {
-        private int _value;
-        public ValueDO(DateTime timestamp, Device device, int value) : base(timestamp, device)
-        {
-            _value = value;
-        }
-
-        public int Value { get { return _value; } set { _value = value; } }
+    {       
+        public ValueDO(DateTime timestamp, Device device, int value) : base(timestamp, device, value){}      
     }
 }
