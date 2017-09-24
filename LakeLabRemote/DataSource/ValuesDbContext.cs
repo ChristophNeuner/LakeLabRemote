@@ -11,6 +11,6 @@ namespace LakeLabRemote.DataSource
     {
         public ValuesDbContext(DbContextOptions<ValuesDbContext> options) : base(options){ }
 
-        public DbSet<Test> Test { get; set; }
+        public DbSet<ValueDO> ValuesDO{ get; set; }
     }
 }

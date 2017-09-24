@@ -20,18 +20,17 @@ namespace LakeLabRemote.Controllers
         {
             valuesDbContext = context;
         }
-        public string Index(JsonObject value)
-        {
-            if (value != null)
-            {
-                valuesDbContext.Test.Add(new Test {Id = Guid.NewGuid().ToString(), Value = value.ToString()});
-                valuesDbContext.SaveChanges();
-                return "success";
-            }
-            else
-            {
-                return "no success";
-            }
-        }
+        //public string Index()
+        //{
+        //    if (value != null)
+        //    {
+        //        //TODO
+        //        return "success";
+        //    }
+        //    else
+        //    {
+        //        return "no success";
+        //    }
+        //}
     }
 }
