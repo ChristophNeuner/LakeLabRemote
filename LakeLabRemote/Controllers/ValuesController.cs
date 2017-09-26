@@ -20,7 +20,7 @@ namespace LakeLabRemote.Controllers
         {
             valuesDbContext = context;
         }
-        public string Index(string deviceName, string sensorType, List<ValueViewModel> data)
+        public string Index([FromBody] string deviceName, [FromBody] string sensorType, [FromBody] List<ValueViewModel> data)
         {
             return deviceName + " " + sensorType + " " + data.First().ToString();
         }
