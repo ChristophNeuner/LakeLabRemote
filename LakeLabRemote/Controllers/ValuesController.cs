@@ -20,17 +20,21 @@ namespace LakeLabRemote.Controllers
         {
             valuesDbContext = context;
         }
-        //public string Index()
-        //{
-        //    if (value != null)
-        //    {
-        //        //TODO
-        //        return "success";
-        //    }
-        //    else
-        //    {
-        //        return "no success";
-        //    }
-        //}
+        public string Index(string deviceName, string sensorType, List<ValueViewModel> data)
+        {
+            return deviceName + " " + sensorType + " " + data.First().ToString();
+        }
+    }
+
+    public class ValueViewModel
+    {
+        DateTime timestamp;
+        float data;
+
+        public ValueViewModel(DateTime ts, float d)
+        {
+            timestamp = ts;
+            data = d;
+        }
     }
 }
