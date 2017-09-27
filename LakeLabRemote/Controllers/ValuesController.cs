@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,21 +21,32 @@ namespace LakeLabRemote.Controllers
         {
             valuesDbContext = context;
         }
-        public string Index([FromBody] string deviceName, [FromBody] string sensorType, [FromBody] List<ValueViewModel> data)
+
+        [HttpPost]
+        public string Index([FromBody]ValueViewModel model)
         {
-            return deviceName + " " + sensorType + " " + data.First().ToString();
+            return $"device-name: {model.DeviceName}{Environment.NewLine}{model.Items.Select(p=> $"{p.Timestamp}: {p.Data}").Aggregate((e,c) => e + Environment.NewLine + c)}";
         }
     }
 
-    public class ValueViewModel
+    public class ValueItemViewModel
     {
-        DateTime timestamp;
-        float data;
+        [JsonProperty("timestamp")]
+        public DateTime Timestamp { get; set; }
 
-        public ValueViewModel(DateTime ts, float d)
-        {
-            timestamp = ts;
-            data = d;
-        }
+        [JsonProperty("data")]
+        public float Data { get; set; }
+    }
+
+    public sealed class ValueViewModel
+    {
+        [JsonProperty("sensorType")]
+        public string SensorType { get; set; }
+
+        [JsonProperty("deviceName")]
+        public string DeviceName { get; set; }
+
+        [JsonProperty("data")]
+        public List<ValueItemViewModel> Items { get; } = new List<ValueItemViewModel>();
     }
 }
