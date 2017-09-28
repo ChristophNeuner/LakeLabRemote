@@ -25,12 +25,18 @@ namespace LakeLabRemote.Controllers
         [HttpPost]
         public string Index([FromBody]ValueViewModel model)
         {
-            return $"device-name: {model.DeviceName}{Environment.NewLine}{model.Items.Select(p=> $"{p.Timestamp}: {p.Data}").Aggregate((e,c) => e + Environment.NewLine + c)}";
+            return $"{model.Items.Select(p=> $"{p.Timestamp}: {p.Data}: {p.DeviceName}: {p.SensorType}").Aggregate((e,c) => e + Environment.NewLine + c)}";
         }
     }
 
     public class ValueItemViewModel
     {
+        [JsonProperty("deviceName")]
+        public string DeviceName { get; set; }
+
+        [JsonProperty("sensorType")]
+        public string SensorType { get; set; }
+
         [JsonProperty("timestamp")]
         public DateTime Timestamp { get; set; }
 
@@ -39,13 +45,7 @@ namespace LakeLabRemote.Controllers
     }
 
     public sealed class ValueViewModel
-    {
-        [JsonProperty("sensorType")]
-        public string SensorType { get; set; }
-
-        [JsonProperty("deviceName")]
-        public string DeviceName { get; set; }
-
+    {       
         [JsonProperty("data")]
         public List<ValueItemViewModel> Items { get; } = new List<ValueItemViewModel>();
     }
