@@ -15,17 +15,65 @@ namespace LakeLabRemote.Controllers
     //[Authorize(Roles = "Admins")]
     public class ValuesController : Controller
     {
-        ValuesDbContext valuesDbContext;
+        private ValuesDbContext valuesDbContext;
+        private DevicesDbContext devicesDbContext;
 
-        public ValuesController(ValuesDbContext context)
+        public ValuesController(ValuesDbContext valuesContext, DevicesDbContext devicesContext)
         {
-            valuesDbContext = context;
+            valuesDbContext = valuesContext;
+            devicesDbContext = devicesContext;
         }
 
         [HttpPost]
         public string Index([FromBody]ValueModel model)
         {
-            return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{model.Items.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
+            if (model == null)
+                return "The provided data model is null.";
+
+            if (model.SensorType == "do")
+            {
+                List<ValueItemModel> ValueItemsToSave = model.Items;
+                if (valuesDbContext.ValuesDO.Count() != 0)
+                {
+                    DateTime latest = valuesDbContext.ValuesDO.ToList().Max(r => r.Timestamp);
+                    ValueItemsToSave = model.Items.Where(d => d.Timestamp > latest).ToList();
+                }
+
+                List<ValueDO> valuesDoToSave = new List<ValueDO>();
+                List<Device> deviceList = devicesDbContext.Devices.Where(d => d.Name == model.DeviceName).ToList();
+                Device device;
+                if (deviceList.Count() == 0)
+                {
+                    device = new Device(model.DeviceName);
+                    devicesDbContext.Add(device);
+                    devicesDbContext.SaveChanges();
+                }
+                else
+                {
+                    device = deviceList.First();
+                }
+                
+                foreach (var value in ValueItemsToSave)
+                {
+                    valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data));
+                }
+
+                valuesDbContext.ValuesDO.AddRange(valuesDoToSave);
+                valuesDbContext.SaveChanges();
+
+                if (valuesDoToSave.Count() != 0)
+                {
+                    return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{valuesDoToSave.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
+                }
+                else
+                    return "All values already existed";
+                
+            }
+            else
+            {
+                return "no success";
+            }
+            //return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{model.Items.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
         }
     }
 

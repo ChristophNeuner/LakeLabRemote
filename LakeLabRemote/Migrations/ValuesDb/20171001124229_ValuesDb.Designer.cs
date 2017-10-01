@@ -11,8 +11,8 @@ using System;
 namespace LakeLabRemote.Migrations.ValuesDb
 {
     [DbContext(typeof(ValuesDbContext))]
-    [Migration("20170924114229_Values")]
-    partial class Values
+    [Migration("20171001124229_ValuesDb")]
+    partial class ValuesDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,11 +42,11 @@ namespace LakeLabRemote.Migrations.ValuesDb
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<float>("Data");
+
                     b.Property<string>("DeviceName");
 
                     b.Property<DateTime>("Timestamp");
-
-                    b.Property<int>("Value");
 
                     b.HasKey("Guid");
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LakeLabRemote.Migrations.ValuesDb
 {
-    public partial class Values : Migration
+    public partial class ValuesDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,9 +27,9 @@ namespace LakeLabRemote.Migrations.ValuesDb
                 columns: table => new
                 {
                     Guid = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Data = table.Column<float>(type: "float", nullable: false),
                     DeviceName = table.Column<string>(type: "varchar(127)", nullable: true),
-                    Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Value = table.Column<int>(type: "int", nullable: false)
+                    Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -41,11 +41,11 @@ namespace LakeLabRemote.Migrations.ValuesDb
                     b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<float>("Data");
+
                     b.Property<string>("DeviceName");
 
                     b.Property<DateTime>("Timestamp");
-
-                    b.Property<int>("Value");
 
                     b.HasKey("Guid");
 

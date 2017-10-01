@@ -25,6 +25,11 @@ namespace LakeLabRemote.Models
             Depth = depth;
         }
 
+        public Device(string name)
+        {
+            Name = name;
+        }
+
         [Key]
         public string Name { get; set; }
         public string Location { get; set; }
