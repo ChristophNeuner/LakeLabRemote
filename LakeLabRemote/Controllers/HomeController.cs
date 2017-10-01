@@ -21,7 +21,8 @@ namespace LakeLabRemote.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<ValueDO> valuesDO = valuesDbContext.ValuesDO.ToList();
+            return View(valuesDO);
         }
 
         public IActionResult Error()

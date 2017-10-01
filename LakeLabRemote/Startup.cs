@@ -7,6 +7,7 @@ using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace LakeLabRemote
 {
@@ -44,6 +45,11 @@ namespace LakeLabRemote
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

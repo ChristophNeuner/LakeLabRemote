@@ -66,8 +66,9 @@ namespace LakeLabRemote.Controllers
                     return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{valuesDoToSave.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
                 }
                 else
+                {
                     return "All values already existed";
-                
+                }                                  
             }
             else
             {
