@@ -32,6 +32,7 @@ namespace LakeLabRemote.Models
 
         [Key]
         public string Name { get; set; }
+        public string Lake { get; set; }
         public string Location { get; set; }
         public string Depth { get; set; }
         public string Ip { get; set; }

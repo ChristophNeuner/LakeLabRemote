@@ -1,9 +1,7 @@
-﻿using LakeLabRemote.Controllers;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
+using LakeLabLib;
+using Newtonsoft.Json;
 
 namespace LakeLabPiApp
 {

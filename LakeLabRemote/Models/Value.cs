@@ -8,12 +8,15 @@ namespace LakeLabRemote.Models
 {
     public abstract class Value
     {
-        protected Value(DateTime timestamp, Device device, float data)
+        protected Value(DateTime timestamp, Device device, float data, string lake, string location, string depth)
         {
             Guid = new Guid();
             Timestamp = timestamp;
             Device = device;
             Data = data;
+            Lake = lake;
+            Location = location;
+            Depth = depth;
         }
 
         protected Value() { }
@@ -23,6 +26,9 @@ namespace LakeLabRemote.Models
         public DateTime Timestamp { get; set; }
         public Device Device { get; set; }
         public float Data { get; set; }
+        public string Lake { get; set; }
+        public string Location { get; set; }
+        public string Depth { get; set; }
 
         public static bool operator ==(Value a, Value b)
         {
@@ -39,7 +45,7 @@ namespace LakeLabRemote.Models
             }
 
             // Return true if the fields match:
-            return a.Timestamp == b.Timestamp && a.Device == b.Device && a.Data == b.Data;
+            return a.Timestamp == b.Timestamp && a.Device.Name == b.Device.Name && a.Data == b.Data && a.Lake == b.Lake && a.Location == b.Location && a.Depth == b.Depth;
         }
 
         public static bool operator !=(Value a, Value b)
@@ -54,7 +60,7 @@ namespace LakeLabRemote.Models
     /// </summary>
     public class ValueDO : Value
     {       
-        public ValueDO(DateTime timestamp, Device device, float data) : base(timestamp, device, data){}
+        public ValueDO(DateTime timestamp, Device device, float data, string lake, string location, string depth) : base(timestamp, device, data, lake, location, depth){}
 
         public ValueDO() { }
     }

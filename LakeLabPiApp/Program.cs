@@ -1,16 +1,15 @@
 ﻿using System;
-using Microsoft.Data.Sqlite;
-using LakeLabRemote.Controllers;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using LakeLabLib;
 
 namespace LakeLabPiApp
 {
     class Program
     {
-        private static string uri = "http://localhost:50992/Values/Index";
+        //private static string uri = "http://212.227.11.55:10/Values/Index";
         private static string databasePath = @"D:\DO.sqlite";
+        private static string uri = "http://localhost:50992/Values/Index";
+        //private static string databasePath = @"/home/pi/iniac/data/DO.sqlite";
         private static string deviceName = "pi1";
         private static string sensorType = "do";
         private static ValueModel model;

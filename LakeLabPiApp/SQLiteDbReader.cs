@@ -1,8 +1,7 @@
-﻿using LakeLabRemote.Controllers;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using LakeLabLib;
 
 namespace LakeLabPiApp
 {
