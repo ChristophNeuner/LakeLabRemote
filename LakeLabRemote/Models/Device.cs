@@ -20,6 +20,7 @@ namespace LakeLabRemote.Models
                 throw new NullReferenceException("Location must not be null or empty.");
             if (string.IsNullOrEmpty(nameof(depth)))
                 throw new NullReferenceException("Depth must not be null or empty.");
+            Guid = new Guid();
             Name = name;
             Location = location;
             Depth = depth;
@@ -31,6 +32,7 @@ namespace LakeLabRemote.Models
         }
 
         [Key]
+        public Guid Guid { get; set; }
         public string Name { get; set; }
         public string Lake { get; set; }
         public string Location { get; set; }

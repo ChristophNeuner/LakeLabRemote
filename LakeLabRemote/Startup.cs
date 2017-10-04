@@ -33,10 +33,8 @@ namespace LakeLabRemote
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
-            services.AddDbContext<DevicesDbContext>(options => options.UseMySql(connectionString));
-            services.AddSingleton<DevicesDbContext>();
-            services.AddDbContext<ValuesDbContext>(options => options.UseMySql(connectionString));
-            services.AddSingleton<ValuesDbContext>();
+            services.AddDbContext<LakeLabDbContext>(options => options.UseMySql(connectionString));
+            services.AddSingleton<LakeLabDbContext>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

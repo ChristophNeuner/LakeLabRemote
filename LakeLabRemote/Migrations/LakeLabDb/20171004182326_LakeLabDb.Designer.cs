@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace LakeLabRemote.Migrations.ValuesDb
+namespace LakeLabRemote.Migrations.LakeLabDb
 {
-    [DbContext(typeof(ValuesDbContext))]
-    [Migration("20171003103507_ValuesDb2")]
-    partial class ValuesDb2
+    [DbContext(typeof(LakeLabDbContext))]
+    [Migration("20171004182326_LakeLabDb")]
+    partial class LakeLabDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace LakeLabRemote.Migrations.ValuesDb
 
             modelBuilder.Entity("LakeLabRemote.Models.Device", b =>
                 {
-                    b.Property<string>("Name")
+                    b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Depth");
@@ -34,9 +34,11 @@ namespace LakeLabRemote.Migrations.ValuesDb
 
                     b.Property<string>("Location");
 
-                    b.HasKey("Name");
+                    b.Property<string>("Name");
 
-                    b.ToTable("Device");
+                    b.HasKey("Guid");
+
+                    b.ToTable("Devices");
                 });
 
             modelBuilder.Entity("LakeLabRemote.Models.ValueDO", b =>
@@ -46,19 +48,13 @@ namespace LakeLabRemote.Migrations.ValuesDb
 
                     b.Property<float>("Data");
 
-                    b.Property<string>("Depth");
-
-                    b.Property<string>("DeviceName");
-
-                    b.Property<string>("Lake");
-
-                    b.Property<string>("Location");
+                    b.Property<Guid?>("DeviceGuid");
 
                     b.Property<DateTime>("Timestamp");
 
                     b.HasKey("Guid");
 
-                    b.HasIndex("DeviceName");
+                    b.HasIndex("DeviceGuid");
 
                     b.ToTable("ValuesDO");
                 });
@@ -67,7 +63,7 @@ namespace LakeLabRemote.Migrations.ValuesDb
                 {
                     b.HasOne("LakeLabRemote.Models.Device", "Device")
                         .WithMany()
-                        .HasForeignKey("DeviceName");
+                        .HasForeignKey("DeviceGuid");
                 });
 #pragma warning restore 612, 618
         }

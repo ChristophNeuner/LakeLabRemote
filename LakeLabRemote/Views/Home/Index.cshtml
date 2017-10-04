@@ -2,7 +2,7 @@
     ViewData["Title"] = "Index";
 }
 
-@model List<ValueDO>
+@model IEnumerable<Value>
 
 <div class="panel-body bg-primary"><h4>Werte</h4></div>
 
@@ -16,7 +16,7 @@
     {
         @foreach(ValueDO value in Model)
         {
-            <tr><td>@value?.Location</td><td>@value?.Depth</td><td>@value?.Data</td></tr>
+            <tr><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td></tr>
         }
     }
 </table>

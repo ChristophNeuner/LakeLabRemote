@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
 using LakeLabLib;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,17 +15,15 @@ namespace LakeLabRemote.Controllers
     //[Authorize(Roles = "Admins")]
     public class ValuesController : Controller
     {
-        private ValuesDbContext valuesDbContext;
-        private DevicesDbContext devicesDbContext;
+        private LakeLabDbContext _dbContext;
 
-        public ValuesController(ValuesDbContext valuesContext, DevicesDbContext devicesContext)
+        public ValuesController(LakeLabDbContext valuesContext, DataSource.LakeLabDbContext devicesContext)
         {
-            valuesDbContext = valuesContext;
-            devicesDbContext = devicesContext;
+            _dbContext = valuesContext;
         }
 
         [HttpPost]
-        public string Index([FromBody]ValueModel model)
+        public async Task<string> Index([FromBody]ValueModel model)
         {
             if (model == null)
                 return "The provided data model is null.";
@@ -31,20 +31,23 @@ namespace LakeLabRemote.Controllers
             if (model.SensorType == "do")
             {
                 List<ValueItemModel> ValueItemsToSave = model.Items;
-                if (valuesDbContext.ValuesDO.Count() != 0)
+                if ((await _dbContext.ValuesDO.CountAsync()) != 0)
                 {
-                    DateTime latest = valuesDbContext.ValuesDO.ToList().Max(r => r.Timestamp);
+                    //DateTime latest = valuesDbContext.ValuesDO.ToList().Max(r => r.Timestamp);
+
+                    DateTime latest = await _dbContext.QueryValuesAsync(queryable => queryable.Select(p => p.Timestamp).MaxAsync());
+
                     ValueItemsToSave = model.Items.Where(d => d.Timestamp > latest).ToList();
                 }
 
                 List<ValueDO> valuesDoToSave = new List<ValueDO>();
-                List<Device> deviceList = devicesDbContext.Devices.Where(d => d.Name == model.DeviceName).ToList();
+                List<Device> deviceList = _dbContext.Devices.Where(d => d.Name == model.DeviceName).ToList();
                 Device device;
                 if (deviceList.Count() == 0)
                 {
                     device = new Device(model.DeviceName);
-                    devicesDbContext.Add(device);
-                    devicesDbContext.SaveChanges();
+                    _dbContext.Add(device);
+                    _dbContext.SaveChanges();
                 }
                 else
                 {
@@ -53,11 +56,11 @@ namespace LakeLabRemote.Controllers
                 
                 foreach (var value in ValueItemsToSave)
                 {
-                    valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data, device.Lake, device.Location, device.Depth));
+                    valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data));
                 }
 
-                valuesDbContext.ValuesDO.AddRange(valuesDoToSave);
-                valuesDbContext.SaveChanges();
+                _dbContext.ValuesDO.AddRange(valuesDoToSave);
+                _dbContext.SaveChanges();
 
                 if (valuesDoToSave.Count() != 0)
                 {

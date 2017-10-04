@@ -7,10 +7,11 @@ using LakeLabRemote.Models;
 
 namespace LakeLabRemote.DataSource
 {
-    public class DevicesDbContext : DbContext
+    public class LakeLabDbContext : DbContext
     {
-        public DevicesDbContext(DbContextOptions<DevicesDbContext> options) : base(options){}
+        public LakeLabDbContext(DbContextOptions<LakeLabDbContext> options) : base(options){}
 
         public DbSet<Device> Devices { get; set; }
+        public DbSet<ValueDO> ValuesDO { get; set; }
     }
 }

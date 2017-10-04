@@ -12,16 +12,16 @@ namespace LakeLabRemote.Controllers
     [Authorize(Roles = "Admins")]
     public class HomeController : Controller
     {
-        ValuesDbContext valuesDbContext;
+        LakeLabDbContext _dbContext;
 
-        public HomeController(ValuesDbContext context)
+        public HomeController(LakeLabDbContext context)
         {
-            valuesDbContext = context;
+            _dbContext = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<ValueDO> valuesDO = valuesDbContext.ValuesDO.ToList();
+            var valuesDO = await _dbContext.QueryValuesAsync(p => p);
             return View(valuesDO);
         }
 

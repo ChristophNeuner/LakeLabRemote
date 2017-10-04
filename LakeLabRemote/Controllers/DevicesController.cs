@@ -15,8 +15,8 @@ namespace LakeLabRemote.Controllers
     [Authorize(Roles = "Admins")]
     public class DevicesController : Controller
     {
-        private DevicesDbContext devicesDbContext;
-        public DevicesController(DevicesDbContext context)
+        private LakeLabDbContext devicesDbContext;
+        public DevicesController(LakeLabDbContext context)
         {
             devicesDbContext = context;
         }
