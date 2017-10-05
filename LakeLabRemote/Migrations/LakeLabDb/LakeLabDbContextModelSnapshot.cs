@@ -35,6 +35,10 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("Owner");
+
+                    b.Property<DateTime>("TimeOfCreation");
+
                     b.HasKey("Guid");
 
                     b.ToTable("Devices");

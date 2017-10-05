@@ -11,7 +11,7 @@ using System;
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
     [DbContext(typeof(LakeLabDbContext))]
-    [Migration("20171004182326_LakeLabDb")]
+    [Migration("20171005213751_LakeLabDb")]
     partial class LakeLabDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,10 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                     b.Property<string>("Location");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("Owner");
+
+                    b.Property<DateTime>("TimeOfCreation");
 
                     b.HasKey("Guid");
 

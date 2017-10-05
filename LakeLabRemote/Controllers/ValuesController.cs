@@ -7,6 +7,8 @@ using LakeLabRemote.Models;
 using LakeLabLib;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using MoreLinq;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,10 +35,7 @@ namespace LakeLabRemote.Controllers
                 List<ValueItemModel> ValueItemsToSave = model.Items;
                 if ((await _dbContext.ValuesDO.CountAsync()) != 0)
                 {
-                    //DateTime latest = valuesDbContext.ValuesDO.ToList().Max(r => r.Timestamp);
-
                     DateTime latest = await _dbContext.QueryValuesAsync(queryable => queryable.Select(p => p.Timestamp).MaxAsync());
-
                     ValueItemsToSave = model.Items.Where(d => d.Timestamp > latest).ToList();
                 }
 
@@ -51,7 +50,7 @@ namespace LakeLabRemote.Controllers
                 }
                 else
                 {
-                    device = deviceList.First();
+                    device = deviceList.MaxBy(p => p.TimeOfCreation);
                 }
                 
                 foreach (var value in ValueItemsToSave)

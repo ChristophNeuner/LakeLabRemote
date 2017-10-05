@@ -39,7 +39,7 @@ namespace LakeLabRemote.Models
             }
 
             // Return true if the fields match:
-            return a.Timestamp == b.Timestamp && a.Device.Name == b.Device.Name && a.Data == b.Data;
+            return a.Timestamp == b.Timestamp && a.Device == b.Device && a.Data == b.Data;
         }
 
         public static bool operator !=(Value a, Value b)

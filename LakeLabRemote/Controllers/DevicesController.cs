@@ -15,15 +15,15 @@ namespace LakeLabRemote.Controllers
     [Authorize(Roles = "Admins")]
     public class DevicesController : Controller
     {
-        private LakeLabDbContext devicesDbContext;
+        private LakeLabDbContext _dbContext;
         public DevicesController(LakeLabDbContext context)
         {
-            devicesDbContext = context;
+            _dbContext = context;
         }
 
         public IActionResult Index()
         {
-            return View(devicesDbContext.Devices.ToList());
+            return View(_dbContext.Devices.ToList());
         }
 
         public IActionResult CreateDevice() => View();
@@ -31,40 +31,40 @@ namespace LakeLabRemote.Controllers
         [HttpPost]
         public IActionResult CreateDevice(Device model)
         {
-            if (devicesDbContext.Devices.ToList().Any(elem => elem.Name == model.Name))
+            if (_dbContext.Devices.ToList().Any(elem => elem.Name == model.Name))
             {
                 ModelState.AddModelError("", "A device with the same name already exists");
             }
 
             if (ModelState.IsValid)
             {
-                Device device = new Device(model.Name, model.Location, model.Depth);
-                devicesDbContext.Add(device);
-                devicesDbContext.SaveChanges();
+                Device device = new Device(model.Name, model.Owner, model.Lake, model.Location, model.Depth);
+                _dbContext.Add(device);
+                _dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(model);         
         }
 
         [HttpPost]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(Guid id)
         {
-            Device device = devicesDbContext.Devices.ToList().Find(elem => elem.Name == id);
-            devicesDbContext.Remove(device);
-            devicesDbContext.SaveChanges();
+            List<Device> devices = _dbContext.Devices.Where(p => p.Guid == id).ToList();
+            _dbContext.Devices.RemoveRange(devices);
+            _dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Edit(string id)
+        public IActionResult Edit(Guid id)
         {
             Device device = new Device();
-            if(string.IsNullOrEmpty(id))
+            if(id == null)
             {
-                ModelState.AddModelError("", "The device no longer exists.");
+                return RedirectToAction(nameof(Index));
             }
             else
             {
-                device = devicesDbContext.Devices.First(d => d.Name == id);
+                device = _dbContext.Devices.First(d => d.Guid == id);
                 if(device == null)
                 {
                     ModelState.AddModelError("", "The device no longer exists.");
@@ -81,13 +81,11 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(string Name, string Location, string Depth)
+        public IActionResult Edit(string Name, string Owner, string Lake, string Location, string Depth)
         {
-           Device device = devicesDbContext.Devices.First(d => d.Name == Name);
-            device.Name = Name;
-            device.Location = Location;
-            device.Depth = Depth;
-            devicesDbContext.SaveChanges();
+            Device device = new Device(Name, Owner, Lake, Location, Depth);
+            _dbContext.Devices.AddAsync(device);
+            _dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
