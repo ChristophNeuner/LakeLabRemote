@@ -44,9 +44,7 @@ namespace LakeLabRemote.Controllers
                 Device device;
                 if (deviceList.Count() == 0)
                 {
-                    device = new Device(model.DeviceName);
-                    _dbContext.Add(device);
-                    _dbContext.SaveChanges();
+                    return "The device does not exist!";
                 }
                 else
                 {
