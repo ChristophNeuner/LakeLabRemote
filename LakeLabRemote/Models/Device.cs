@@ -19,7 +19,7 @@ namespace LakeLabRemote.Models
             Name = name;
         }
 
-        public Device(string name, string owner, string lake, string location, string depth)
+        public Device(string name, AppUser owner, string lake, string location, string depth)
         {
             if (string.IsNullOrEmpty(nameof(name)))
                 throw new NullReferenceException("Name must not be null or empty.");
@@ -44,7 +44,7 @@ namespace LakeLabRemote.Models
         [Key]
         public Guid Guid { get; set; }
         public string Name { get; set; }
-        public string Owner { get; set; }
+        public AppUser Owner { get; set; }
         public string Lake { get; set; }
         public string Location { get; set; }
         public string Depth { get; set; }

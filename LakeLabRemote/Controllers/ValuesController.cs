@@ -48,6 +48,8 @@ namespace LakeLabRemote.Controllers
                 }
                 else
                 {
+                    //TODO check for every value by its timestamp, which device is the correct one and not just take the latest
+
                     device = deviceList.MaxBy(p => p.TimeOfCreation);
                 }
                 
