@@ -12,19 +12,10 @@ namespace LakeLabRemote.Models
     {
         public Device() { }
 
-        public Device(string name)
+        public Device(string name, string lake, string location, string depth)
         {
             if (string.IsNullOrEmpty(nameof(name)))
                 throw new NullReferenceException("Name must not be null or empty.");
-            Name = name;
-        }
-
-        public Device(string name, AppUser owner, string lake, string location, string depth)
-        {
-            if (string.IsNullOrEmpty(nameof(name)))
-                throw new NullReferenceException("Name must not be null or empty.");
-            if (string.IsNullOrEmpty(nameof(owner)))
-                throw new NullReferenceException("Owner must not be null or empty.");
             if (string.IsNullOrEmpty(nameof(lake)))
                 throw new NullReferenceException("Lake must not be null or empty.");
             if (string.IsNullOrEmpty(nameof(location)))
@@ -34,7 +25,6 @@ namespace LakeLabRemote.Models
 
             Guid = new Guid();
             Name = name;
-            Owner = owner;
             Lake = lake;
             Location = location;
             Depth = depth;
@@ -44,11 +34,30 @@ namespace LakeLabRemote.Models
         [Key]
         public Guid Guid { get; set; }
         public string Name { get; set; }
-        public AppUser Owner { get; set; }
         public string Lake { get; set; }
         public string Location { get; set; }
         public string Depth { get; set; }
         public DateTime TimeOfCreation { get; set; }
         public string Ip { get; set; }
+
+        public delegate void DeviceEditedEventHandler(object sender, DeviceEditedEventArgs e);
+        public event DeviceEditedEventHandler DeviceEditedEvent;
+        protected virtual void RaiseDeviceEditedEvent(Device device)
+        {
+            if(DeviceEditedEvent != null)
+            {
+                DeviceEditedEvent(this, new DeviceEditedEventArgs(device));
+            }
+        }
+
+        public class DeviceEditedEventArgs
+        {
+            public DeviceEditedEventArgs(Device d)
+            {
+                Device = d;
+            }
+            public Device Device { get; private set; }
+        }
+        
     }
 }

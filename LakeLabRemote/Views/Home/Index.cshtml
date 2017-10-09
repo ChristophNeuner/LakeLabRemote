@@ -4,11 +4,13 @@
 
 @model IEnumerable<Value>
 
+<a asp-action="DeleteAllValues" class="btn btn-primary btn-danger">Alle Werte löschen</a>
+
 <div class="panel-body bg-primary"><h4>Werte</h4></div>
 
 <table class="table table-condensed table-bordered">
     <tr><th>Ort</th><th>Tiefe</th>O2-Gehalt (mg/l)</tr>
-    @if (Model.Count() == 0)
+    @if (Model == null || Model.Count() == 0)
     {
         <tr><td colspan="3" class="text-center">Keine Werte vorhanden.</td></tr>
     }

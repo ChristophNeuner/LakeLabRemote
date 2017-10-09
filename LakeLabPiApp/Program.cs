@@ -10,7 +10,7 @@ namespace LakeLabPiApp
         private static string databasePath = @"D:\DO.sqlite";
         private static string uri = "http://localhost:50992/Values/Index";
         //private static string databasePath = @"/home/pi/iniac/data/DO.sqlite";
-        private static string deviceName = "pi1";
+        private static string deviceName = "test";
         private static string sensorType = "do";
         private static ValueModel model;
 

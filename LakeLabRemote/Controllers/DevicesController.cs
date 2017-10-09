@@ -15,10 +15,12 @@ namespace LakeLabRemote.Controllers
     [Authorize(Roles = "Admins")]
     public class DevicesController : Controller
     {
+        private AppIdentityDbContext _identityDbContext;
         private LakeLabDbContext _dbContext;
-        public DevicesController(LakeLabDbContext context)
+        public DevicesController(LakeLabDbContext context, AppIdentityDbContext identityDbContext)
         {
             _dbContext = context;
+            _identityDbContext = identityDbContext;
         }
 
         public IActionResult Index()
@@ -38,7 +40,7 @@ namespace LakeLabRemote.Controllers
 
             if (ModelState.IsValid)
             {
-                Device device = new Device(model.Name, model.Owner, model.Lake, model.Location, model.Depth);
+                Device device = new Device(model.Name, model.Lake, model.Location, model.Depth);
                 _dbContext.Add(device);
                 _dbContext.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,10 +83,10 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(string Name, string Owner, string Lake, string Location, string Depth)
+        public IActionResult Edit(Device device)
         {
-            Device device = new Device(Name, Owner, Lake, Location, Depth);
-            _dbContext.Devices.AddAsync(device);
+            Device newDevice = new Device(device.Name, device.Lake, device.Location, device.Depth);
+            _dbContext.Devices.AddAsync(newDevice);
             _dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }

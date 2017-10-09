@@ -29,5 +29,15 @@ namespace LakeLabRemote.Controllers
         {
             return View();
         }
+
+        public IActionResult DeleteAllValues()
+        {
+            foreach (var elem in _dbContext.ValuesDO)
+            {
+                _dbContext.ValuesDO.Remove(elem);
+            }
+            _dbContext.SaveChangesAsync();
+            return View(nameof(Index));
+        }
     }
 }
