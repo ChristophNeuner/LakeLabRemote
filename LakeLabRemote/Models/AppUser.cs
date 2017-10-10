@@ -6,6 +6,6 @@ namespace LakeLabRemote.Models
 {
     public class AppUser : IdentityUser
     {
-        List<Device> Devices { get; set; }
+        public List<Device> Devices { get; set; }
     }
 }

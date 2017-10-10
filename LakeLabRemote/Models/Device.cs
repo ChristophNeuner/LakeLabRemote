@@ -40,24 +40,25 @@ namespace LakeLabRemote.Models
         public DateTime TimeOfCreation { get; set; }
         public string Ip { get; set; }
 
+
         public delegate void DeviceEditedEventHandler(object sender, DeviceEditedEventArgs e);
         public event DeviceEditedEventHandler DeviceEditedEvent;
-        protected virtual void RaiseDeviceEditedEvent(Device device)
+        protected virtual void RaiseDeviceEditedEvent(Device newDevice)
         {
-            if(DeviceEditedEvent != null)
+            if (DeviceEditedEvent != null)
             {
-                DeviceEditedEvent(this, new DeviceEditedEventArgs(device));
+                DeviceEditedEvent(this, new DeviceEditedEventArgs(newDevice));
             }
         }
 
         public class DeviceEditedEventArgs
         {
-            public DeviceEditedEventArgs(Device d)
+            public DeviceEditedEventArgs(Device newDev)
             {
-                Device = d;
+                NewDevice = newDev;
             }
-            public Device Device { get; private set; }
+            public Device NewDevice { get; private set; }
         }
-        
+
     }
 }

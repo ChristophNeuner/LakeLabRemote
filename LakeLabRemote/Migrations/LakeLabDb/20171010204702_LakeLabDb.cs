@@ -18,7 +18,6 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                     Lake = table.Column<string>(type: "longtext", nullable: true),
                     Location = table.Column<string>(type: "longtext", nullable: true),
                     Name = table.Column<string>(type: "longtext", nullable: true),
-                    Owner = table.Column<string>(type: "longtext", nullable: true),
                     TimeOfCreation = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>

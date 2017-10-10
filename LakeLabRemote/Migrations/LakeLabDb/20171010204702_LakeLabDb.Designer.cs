@@ -11,8 +11,8 @@ using System;
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
     [DbContext(typeof(LakeLabDbContext))]
-    [Migration("20171009175411_LakeLabDb2")]
-    partial class LakeLabDb2
+    [Migration("20171010204702_LakeLabDb")]
+    partial class LakeLabDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,44 +20,6 @@ namespace LakeLabRemote.Migrations.LakeLabDb
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
-
-            modelBuilder.Entity("LakeLabRemote.Models.AppUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Email");
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail");
-
-                    b.Property<string>("NormalizedUserName");
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppUser");
-                });
 
             modelBuilder.Entity("LakeLabRemote.Models.Device", b =>
                 {
@@ -74,13 +36,9 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("OwnerId");
-
                     b.Property<DateTime>("TimeOfCreation");
 
                     b.HasKey("Guid");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Devices");
                 });
@@ -101,13 +59,6 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                     b.HasIndex("DeviceGuid");
 
                     b.ToTable("ValuesDO");
-                });
-
-            modelBuilder.Entity("LakeLabRemote.Models.Device", b =>
-                {
-                    b.HasOne("LakeLabRemote.Models.AppUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId");
                 });
 
             modelBuilder.Entity("LakeLabRemote.Models.ValueDO", b =>

@@ -48,11 +48,11 @@ namespace LakeLabRemote.Controllers
                 }
                 else
                 {
-                    //TODO check for every value by its timestamp, which device is the correct one and not just take the latest
+                    //TODO check for every value by its timestamp, which device is the correct one and do not just take the latest.
 
                     device = deviceList.MaxBy(p => p.TimeOfCreation);
                 }
-                
+
                 foreach (var value in ValueItemsToSave)
                 {
                     valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data));
@@ -68,7 +68,7 @@ namespace LakeLabRemote.Controllers
                 else
                 {
                     return "All values already existed";
-                }                                  
+                }
             }
             else
             {
