@@ -2,7 +2,7 @@
 
 namespace LakeLabRemote.Models.ViewModels
 {
-    public class RoleModificationModel
+    public class RoleModificationViewModel
     {
             [Required]
             public string RoleName { get; set; }

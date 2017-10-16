@@ -79,7 +79,7 @@ namespace LakeLabRemote.Controllers
                 list.Add(user);
             }
 
-            return View(new RoleEditModel
+            return View(new RoleEditViewModel
                 {
                     Role = role,
                     Members = members,
@@ -88,7 +88,7 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RoleModificationModel model)
+        public async Task<IActionResult> Edit(RoleModificationViewModel model)
         {
             IdentityResult result;
             if(ModelState.IsValid)

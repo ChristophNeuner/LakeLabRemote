@@ -34,9 +34,7 @@
                             <div>@device?.Name</div>
                         }
                     }
-                    <form asp-action="EditDevices" method="post" asp-route-id="@user.Id">
-                        <button type="submit" class="btn btn-sm btn-primary">Edit Devices</button>
-                    </form>
+                <a asp-action="EditDevices" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit Devices</a>
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@user.Id">
                         <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit</a>

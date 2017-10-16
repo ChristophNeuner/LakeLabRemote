@@ -87,6 +87,13 @@ namespace LakeLabRemote.Controllers
         {
             Device newDevice = new Device(device.Name, device.Lake, device.Location, device.Depth);
             _dbContext.Devices.AddAsync(newDevice);
+            foreach(AppUser user in _identityDbContext.Users)
+            {
+                if(user.HasDevice(device))
+                {
+                    user.Devices.Add(newDevice);
+                }
+            }
             _dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
