@@ -39,6 +39,7 @@ namespace LakeLabRemote.Models
         public string Depth { get; set; }
         public DateTime TimeOfCreation { get; set; }
         public string Ip { get; set; }
+        public ICollection<AppUserDevice> AppUserDevices { get; set; }
 
 
         public delegate void DeviceEditedEventHandler(object sender, DeviceEditedEventArgs e);

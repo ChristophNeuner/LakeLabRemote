@@ -7,14 +7,14 @@ namespace LakeLabRemote.Models.ViewModels
 {
     public class AppUserDevicesEditViewModel
     {
-        public AppUserDevicesEditViewModel(AppUser user, List<Device> members, List<Device> nonMembers)
+        public AppUserDevicesEditViewModel(AppUser user, List<Device> accessibleDevices, List<Device> notAccessibleDevices)
         {
             User = user;
-            Members = members;
-            NonMembers = nonMembers;
+            AccessibleDevices = accessibleDevices;
+            NotAccessibleDevices = notAccessibleDevices;
         }
         public AppUser User { get; set; }
-        public List<Device> Members { get; set; }
-        public List<Device> NonMembers { get; set; }
+        public List<Device> AccessibleDevices { get; set; }
+        public List<Device> NotAccessibleDevices { get; set; }
     }
 }

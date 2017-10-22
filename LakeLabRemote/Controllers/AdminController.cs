@@ -151,15 +151,15 @@ namespace LakeLabRemote.Controllers
                 ModelState.AddModelError("", "The user no longer exists.");
                 return View(nameof(Index));
             }
-            List<Device> members = new List<Device>();
-            List<Device> nonMembers = new List<Device>();
+            List<Device> accessibleDevices = new List<Device>();
+            List<Device> notAccessibleDevices = new List<Device>();
             foreach (Device device in _dbContext.Devices)
             {
-                List<Device> list = user.HasDevice(device) ? members : nonMembers;
+                List<Device> list = user.IsDeviceAccessible(device) ? accessibleDevices : notAccessibleDevices;
                 list.Add(device);
             }
 
-            return View(new AppUserDevicesEditViewModel(user, members, nonMembers));
+            return View(new AppUserDevicesEditViewModel(user, accessibleDevices, notAccessibleDevices));
         }
 
         //[HttpPost]

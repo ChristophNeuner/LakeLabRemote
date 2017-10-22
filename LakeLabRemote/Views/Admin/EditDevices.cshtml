@@ -9,13 +9,13 @@
     <input type="hidden" name="UserId" value="@Model.User.Id" />
     <h6 class="bg-info panel-body">Add To @Model.User.UserName</h6>
     <table class="table table-bordered table-condensed">
-        @if (Model.NonMembers.Count() == 0)
+        @if (Model.NotAccessibleDevices.Count() == 0)
         {
             <tr><td colspan="3">All Devices are members.</td></tr>
         }
         else
         {
-            @foreach (Device device in Model.NonMembers)
+            @foreach (Device device in Model.NotAccessibleDevices)
             {
                 <tr>
                     <td>@device.Name</td>
@@ -29,13 +29,13 @@
     </table>
     <h6 class="bg-info panel-body">Remove From @Model.User.UserName</h6>
     <table class="table table-bordered table-condensed">
-        @if (Model.Members.Count() == 0)
+        @if (Model.AccessibleDevices.Count() == 0)
         {
             <tr><td colspan="3">No devices are members.</td></tr>
         }
         else
         {
-            @foreach (Device device in Model.Members)
+            @foreach (Device device in Model.AccessibleDevices)
             {
                 <tr>
                     <td>@device.Name</td>
