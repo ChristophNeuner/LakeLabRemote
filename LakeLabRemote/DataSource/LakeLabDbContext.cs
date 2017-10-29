@@ -15,20 +15,20 @@ namespace LakeLabRemote.DataSource
         public DbSet<ValueDO> ValuesDO { get; set; } 
         public DbSet<AppUserDevice> AppUserDeviceAssociation { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<AppUserDevice>()
-        .HasKey(aud => new { aud.AppUserId, aud.DeviceId });
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<AppUserDevice>()
+        //.HasKey(aud => new { aud.AppUserId, aud.DeviceId });
 
-            modelBuilder.Entity<AppUserDevice>()
-                .HasOne(aud => aud.User)
-                .WithMany(au => au.AppUserDevices)
-                .HasForeignKey(aud => aud.AppUserId);
+        //    modelBuilder.Entity<AppUserDevice>()
+        //        .HasOne(aud => aud.User)
+        //        .WithMany(au => au.AppUserDevices)
+        //        .HasForeignKey(aud => aud.AppUserId);
 
-            modelBuilder.Entity<AppUserDevice>()
-                .HasOne(aud => aud.Device)
-                .WithMany(d => d.AppUserDevices)
-                .HasForeignKey(aud => aud.DeviceId);
-        }
+        //    modelBuilder.Entity<AppUserDevice>()
+        //        .HasOne(aud => aud.Device)
+        //        .WithMany(d => d.AppUserDevices)
+        //        .HasForeignKey(aud => aud.DeviceId);
+        //}
     }
 }

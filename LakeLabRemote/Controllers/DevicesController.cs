@@ -42,7 +42,7 @@ namespace LakeLabRemote.Controllers
             {
                 Device device = new Device(model.Name, model.Lake, model.Location, model.Depth);
                 _dbContext.Add(device);
-                _dbContext.SaveChanges();
+                _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(model);         
@@ -51,9 +51,9 @@ namespace LakeLabRemote.Controllers
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
-            List<Device> devices = _dbContext.Devices.Where(p => p.Guid == id).ToList();
+            List<Device> devices = _dbContext.Devices.Where(p => p.Id == id).ToList();
             _dbContext.Devices.RemoveRange(devices);
-            _dbContext.SaveChanges();
+            _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -66,7 +66,7 @@ namespace LakeLabRemote.Controllers
             }
             else
             {
-                device = _dbContext.Devices.First(d => d.Guid == id);
+                device = _dbContext.Devices.First(d => d.Id == id);
                 if(device == null)
                 {
                     ModelState.AddModelError("", "The device no longer exists.");
@@ -91,10 +91,10 @@ namespace LakeLabRemote.Controllers
             {
                 if(user.IsDeviceAccessible(device))
                 {
-                    user.AppUserDevices.Add(newDevice);
+                    _dbContext.AppUserDeviceAssociation.AddAsync(new AppUserDevice(user.Id, device.Id));
                 }
             }
-            _dbContext.SaveChanges();
+            _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

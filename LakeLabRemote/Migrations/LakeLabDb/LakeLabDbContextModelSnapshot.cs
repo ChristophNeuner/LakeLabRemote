@@ -22,7 +22,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
             modelBuilder.Entity("LakeLabRemote.Models.Device", b =>
                 {
-                    b.Property<Guid>("Guid")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Depth");
@@ -37,14 +37,14 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
                     b.Property<DateTime>("TimeOfCreation");
 
-                    b.HasKey("Guid");
+                    b.HasKey("Id");
 
                     b.ToTable("Devices");
                 });
 
             modelBuilder.Entity("LakeLabRemote.Models.ValueDO", b =>
                 {
-                    b.Property<Guid>("Guid")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Data");
@@ -53,7 +53,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
                     b.Property<DateTime>("Timestamp");
 
-                    b.HasKey("Guid");
+                    b.HasKey("Id");
 
                     b.HasIndex("DeviceGuid");
 

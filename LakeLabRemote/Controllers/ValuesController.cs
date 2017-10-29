@@ -25,7 +25,7 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public async Task<string> Index([FromBody]ValueModel model)
+        public async Task<string> ReceiveValues([FromBody]ValueModel model)
         {
             if (model == null)
                 return "The provided data model is null.";
@@ -58,8 +58,8 @@ namespace LakeLabRemote.Controllers
                     valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data));
                 }
 
-                _dbContext.ValuesDO.AddRange(valuesDoToSave);
-                _dbContext.SaveChanges();
+                await _dbContext.ValuesDO.AddRangeAsync(valuesDoToSave);
+                await _dbContext.SaveChangesAsync();
 
                 if (valuesDoToSave.Count() != 0)
                 {

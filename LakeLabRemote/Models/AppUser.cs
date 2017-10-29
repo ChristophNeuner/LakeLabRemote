@@ -8,8 +8,6 @@ namespace LakeLabRemote.Models
 {
     public class AppUser : IdentityUser
     {
-        public ICollection<AppUserDevice> AppUserDevices { get; set; }
-
         public bool IsDeviceAccessible(Device device)
         {
             return true;

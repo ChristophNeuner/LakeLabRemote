@@ -22,7 +22,7 @@
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td>@user.Email</td>
-                <td>
+                @*<td>
                     @if (user.Devices == null || user.Devices?.Count() == 0)
                     {
                         <p>Keine Geräte zugeordnert.</p>
@@ -34,7 +34,7 @@
                             <div>@device?.Name</div>
                         }
                     }
-                <a asp-action="EditDevices" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit Devices</a>
+                <a asp-action="EditDevices" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit Devices</a>*@
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@user.Id">
                         <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit</a>

@@ -23,7 +23,7 @@ namespace LakeLabRemote.Models
             if (string.IsNullOrEmpty(nameof(depth)))
                 throw new NullReferenceException("Depth must not be null or empty.");
 
-            Guid = new Guid();
+            Id = new Guid();
             Name = name;
             Lake = lake;
             Location = location;
@@ -32,14 +32,13 @@ namespace LakeLabRemote.Models
         }
 
         [Key]
-        public Guid Guid { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Lake { get; set; }
         public string Location { get; set; }
         public string Depth { get; set; }
         public DateTime TimeOfCreation { get; set; }
         public string Ip { get; set; }
-        public ICollection<AppUserDevice> AppUserDevices { get; set; }
 
 
         public delegate void DeviceEditedEventHandler(object sender, DeviceEditedEventArgs e);

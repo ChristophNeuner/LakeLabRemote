@@ -6,9 +6,9 @@ namespace LakeLabPiApp
 {
     class Program
     {
-        //private static string uri = "http://212.227.11.55:10/Values/Index";
+        //private static string uri = "http://212.227.11.55:10/Values/ReceiveValues";
         private static string databasePath = @"D:\DO.sqlite";
-        private static string uri = "http://localhost:50992/Values/Index";
+        private static string uri = "http://localhost:50992/Values/ReceiveValues";
         //private static string databasePath = @"/home/pi/iniac/data/DO.sqlite";
         private static string deviceName = "test";
         private static string sensorType = "do";

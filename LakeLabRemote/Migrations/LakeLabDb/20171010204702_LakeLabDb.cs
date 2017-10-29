@@ -41,7 +41,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                         name: "FK_ValuesDO_Devices_DeviceGuid",
                         column: x => x.DeviceGuid,
                         principalTable: "Devices",
-                        principalColumn: "Guid",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
