@@ -46,5 +46,32 @@ namespace LakeLabRemote.DataSource
 
             return queryShaper(context.ValuesDO.Include(p => p.Device));
         }
+
+        public static async Task<IEnumerable<Device>> QueryAppUserDeviceAssociationAsync(this LakeLabDbContext context, string userId)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            List<AppUserDevice> associations = await context.AppUserDeviceAssociation.Where(p => p.AppUserId == userId).ToListAsync();
+            List<Device> allDevices = await context.Devices.ToListAsync();
+            List<Device> accessibleDevices = new List<Device>();
+            foreach(var elem in associations)
+            {
+                accessibleDevices.Add(allDevices.FirstOrDefault(p => p.Id == elem.DeviceId));
+            }
+            return accessibleDevices;
+        }
+
+        public static async Task<bool> IsDeviceAccessibleForUser(this LakeLabDbContext context, AppUser user, Device device)
+        {
+            if (user == null)
+                throw new NullReferenceException(nameof(user));
+
+            if (device == null)
+                throw new NullReferenceException(nameof(device));
+
+            IEnumerable<Device> accessibleDevices = await QueryAppUserDeviceAssociationAsync(context, user.Id);
+            return accessibleDevices.Contains(device);
+        }
     }
 }

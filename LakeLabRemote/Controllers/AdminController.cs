@@ -155,7 +155,7 @@ namespace LakeLabRemote.Controllers
             List<Device> notAccessibleDevices = new List<Device>();
             foreach (Device device in _dbContext.Devices)
             {
-                List<Device> list = user.IsDeviceAccessible(device) ? accessibleDevices : notAccessibleDevices;
+                List<Device> list = await LakeLabContextExtension.IsDeviceAccessibleForUser(_dbContext, user, device) ? accessibleDevices : notAccessibleDevices;
                 list.Add(device);
             }
 

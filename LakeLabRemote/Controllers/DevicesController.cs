@@ -89,7 +89,7 @@ namespace LakeLabRemote.Controllers
             _dbContext.Devices.AddAsync(newDevice);
             foreach(AppUser user in _identityDbContext.Users)
             {
-                if(user.IsDeviceAccessible(device))
+                if(LakeLabContextExtension.IsDeviceAccessibleForUser(_dbContext, user,)
                 {
                     _dbContext.AppUserDeviceAssociation.AddAsync(new AppUserDevice(user.Id, device.Id));
                 }

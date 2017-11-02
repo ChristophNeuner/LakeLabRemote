@@ -17,8 +17,6 @@ namespace LakeLabRemote.Models
         }
         public string AppUserId { get; set; }
         public Guid DeviceId { get; set; }
-        //public AppUser User { get; set; }
-        //public Device Device { get; set; }
 
         [Key]
         public string ComposedKey { get; private set; }
