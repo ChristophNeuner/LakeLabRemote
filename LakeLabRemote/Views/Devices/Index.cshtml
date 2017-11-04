@@ -5,17 +5,17 @@
 
 <div class="panel-body bg-primary "><h4>Sensoren</h4></div>
 <table class="table table-condensed table-bordered">
-    <tr><th>Gerät</th><th>Gewässer</th><th>Ort</th><th>Tiefe</th></tr>
+    <tr><th>Id</th><th>Gerät</th><th>Gewässer</th><th>Ort</th><th>Tiefe</th></tr>
     @if (Model.Count == 0)
     {
-        <tr><td colspan="3" class="text-center">Keine Geräte eingetragen.</td></tr>
+        <tr><td colspan="4" class="text-center">Keine Geräte eingetragen.</td></tr>
     }
     else
     {
         @foreach (Device device in Model)
         {
             <tr>
-                <td>@device?.Name</td><td>@device?.Lake</td><td>@device?.Location</td><td>@device?.Depth</td>
+                <td>@device?.Id</td><td>@device?.Name</td><td>@device?.Lake</td><td>@device?.Location</td><td>@device?.Depth</td>
                 <td>
                     <form asp-action="Delete" method="post" asp-route-id="@device.Id">
                         <a asp-action="Edit" asp-route-id="@device.Id" class="btn btn-primary btn-sm">Edit</a>

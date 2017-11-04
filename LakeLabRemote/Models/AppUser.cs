@@ -9,5 +9,6 @@ namespace LakeLabRemote.Models
 {
     public class AppUser : IdentityUser
     {
+
     }
 }

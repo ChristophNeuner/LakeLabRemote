@@ -10,7 +10,7 @@ namespace LakeLabRemote.Models.ViewModels
     {
         [Required]
         public string UserId { get; set; }
-        public string[] DeviceIdsToAdd { get; set; }
-        public string[] DeviceIdsToRemove { get; set; }
+        public Guid[] DeviceIdsToAdd { get; set; }
+        public Guid[] DeviceIdsToRemove { get; set; }
     }
 }

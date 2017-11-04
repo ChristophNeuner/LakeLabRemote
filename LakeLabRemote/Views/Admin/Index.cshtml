@@ -2,7 +2,7 @@
     ViewData["Title"] = "Users";
 }
 
-@model IEnumerable<AppUser>
+@model List<AppUserViewModel>
 
 <div class="panel-body bg-primary "><h4>User Accounts</h4></div>
 
@@ -16,13 +16,13 @@
     }
     else
     {
-        foreach (AppUser user in Model)
+        foreach (AppUserViewModel user in Model)
         {
             <tr>
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
-                <td>@user.Email</td>
-                @*<td>
+                <td>@user?.AppUser?.Id</td>
+                <td>@user?.AppUser?.UserName</td>
+                <td>@user?.AppUser?.Email</td>
+                <td>
                     @if (user.Devices == null || user.Devices?.Count() == 0)
                     {
                         <p>Keine Geräte zugeordnert.</p>
@@ -34,10 +34,10 @@
                             <div>@device?.Name</div>
                         }
                     }
-                <a asp-action="EditDevices" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit Devices</a>*@
+                <a asp-action="EditDevices" class="btn btn-sm btn-primary" asp-route-id="@user.AppUser.Id">Edit Devices</a>
                 <td>
-                    <form asp-action="Delete" method="post" asp-route-id="@user.Id">
-                        <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@user.Id">Edit</a>
+                    <form asp-action="Delete" method="post" asp-route-id="@user?.AppUser?.Id">
+                        <a asp-action="Edit" class="btn btn-sm btn-primary" asp-route-id="@user?.AppUser?.Id">Edit</a>
                         <button type="submit" class="btn btn-sm btn-danger ">Delete</button>
                     </form>
                 </td>

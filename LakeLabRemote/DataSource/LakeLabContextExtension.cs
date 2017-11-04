@@ -62,7 +62,7 @@ namespace LakeLabRemote.DataSource
             return accessibleDevices;
         }
 
-        public static async Task<bool> IsDeviceAccessibleForUser(this LakeLabDbContext context, AppUser user, Device device)
+        public static async Task<bool> IsDeviceAccessibleForUserAsync(this LakeLabDbContext context, AppUser user, Device device)
         {
             if (user == null)
                 throw new NullReferenceException(nameof(user));

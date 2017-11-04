@@ -7,6 +7,7 @@ using LakeLabRemote.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,7 +30,16 @@ namespace LakeLabRemote.Controllers
             _dbContext = dbContext;
         }
 
-        public ViewResult Index() => View(_userManager.Users);
+        public async Task<ViewResult> Index()
+        {
+            List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
+            foreach(AppUser user in _userManager.Users)
+            {
+                appUserViewModels.Add(new AppUserViewModel(user, await LakeLabContextExtension.QueryAppUserDeviceAssociationAsync(_dbContext, user.Id)));
+            }
+
+            return View(appUserViewModels);
+        }
 
         public IActionResult CreateUser() => View();
 
@@ -155,18 +165,38 @@ namespace LakeLabRemote.Controllers
             List<Device> notAccessibleDevices = new List<Device>();
             foreach (Device device in _dbContext.Devices)
             {
-                List<Device> list = await LakeLabContextExtension.IsDeviceAccessibleForUser(_dbContext, user, device) ? accessibleDevices : notAccessibleDevices;
+                List<Device> list = await LakeLabContextExtension.IsDeviceAccessibleForUserAsync(_dbContext, user, device) ? accessibleDevices : notAccessibleDevices;
                 list.Add(device);
             }
 
             return View(new AppUserDevicesEditViewModel(user, accessibleDevices, notAccessibleDevices));
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> EditDevices(AppUserDevicesModificationViewModel model)
-        //{
+        [HttpPost]
+        public async Task<IActionResult> EditDevices(AppUserDevicesModificationViewModel model)
+        {
+            List<AppUserDevice> appUserDeviceAssociationsToAdd = new List<AppUserDevice>();
+            if(model.DeviceIdsToAdd != null && model.DeviceIdsToAdd.Length != 0)
+            {
+                foreach (Guid id in model.DeviceIdsToAdd)
+                {
+                    appUserDeviceAssociationsToAdd.Add(new AppUserDevice(model.UserId, id));
+                }
+                await _dbContext.AppUserDeviceAssociation.AddRangeAsync(appUserDeviceAssociationsToAdd);
+            }
 
-        //}
+            if (model.DeviceIdsToRemove != null && model.DeviceIdsToRemove.Length != 0)
+            {
+                foreach (Guid id in model.DeviceIdsToRemove)
+                {
+                    //TODO
+                    throw new NotImplementedException();
+                }
+            }
+                
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         private void AddErrorsFromResult(IdentityResult result)
         {

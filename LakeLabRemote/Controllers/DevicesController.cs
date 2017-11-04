@@ -83,18 +83,20 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Device device)
+        public async Task<IActionResult> Edit(Device device)
         {
             Device newDevice = new Device(device.Name, device.Lake, device.Location, device.Depth);
-            _dbContext.Devices.AddAsync(newDevice);
+            await _dbContext.Devices.AddAsync(newDevice);
+            List<AppUserDevice> newAppUserAssociations = new List<AppUserDevice>();
             foreach(AppUser user in _identityDbContext.Users)
             {
-                if(LakeLabContextExtension.IsDeviceAccessibleForUser(_dbContext, user,)
+                if(await LakeLabContextExtension.IsDeviceAccessibleForUserAsync(_dbContext, user, device))
                 {
-                    _dbContext.AppUserDeviceAssociation.AddAsync(new AppUserDevice(user.Id, device.Id));
+                    newAppUserAssociations.Add(new AppUserDevice(user.Id, newDevice.Id));
                 }
             }
-            _dbContext.SaveChangesAsync();
+            await _dbContext.AppUserDeviceAssociation.AddRangeAsync(newAppUserAssociations);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
