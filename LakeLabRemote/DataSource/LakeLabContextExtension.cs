@@ -71,7 +71,10 @@ namespace LakeLabRemote.DataSource
                 throw new NullReferenceException(nameof(device));
 
             IEnumerable<Device> accessibleDevices = await QueryAppUserDeviceAssociationAsync(context, user.Id);
-            return accessibleDevices.Contains(device);
+            if (accessibleDevices.Where(d => d.Id == device.Id).Count() == 0)
+                return false;
+            else
+                return true;
         }
     }
 }

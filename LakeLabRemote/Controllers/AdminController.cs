@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Linq;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -185,13 +186,16 @@ namespace LakeLabRemote.Controllers
                 await _dbContext.AppUserDeviceAssociation.AddRangeAsync(appUserDeviceAssociationsToAdd);
             }
 
+            List<AppUserDevice> toDelete = new List<AppUserDevice>();
             if (model.DeviceIdsToRemove != null && model.DeviceIdsToRemove.Length != 0)
             {
                 foreach (Guid id in model.DeviceIdsToRemove)
                 {
-                    //TODO
-                    throw new NotImplementedException();
+                    toDelete.AddRange(_dbContext.AppUserDeviceAssociation.Where(p => p.AppUserId == model.UserId).Where(d => d.DeviceId == id));
                 }
+
+                _dbContext.AppUserDeviceAssociation.RemoveRange(toDelete);
+                await _dbContext.SaveChangesAsync();
             }
                 
             await _dbContext.SaveChangesAsync();

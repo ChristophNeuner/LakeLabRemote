@@ -9,6 +9,7 @@ using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 namespace LakeLabRemote.Controllers
 {
@@ -49,11 +50,12 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            List<Device> devices = _dbContext.Devices.Where(p => p.Id == id).ToList();
+            List<Device> devices = await _dbContext.Devices.Where(p => p.Id == id).ToListAsync();
             _dbContext.Devices.RemoveRange(devices);
-            _dbContext.SaveChangesAsync();
+            List<AppUserDevice> appUserDevices = await _dbContext.AppUserDeviceAssociation.Where(p => p.DeviceId == id).ToListAsync();
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

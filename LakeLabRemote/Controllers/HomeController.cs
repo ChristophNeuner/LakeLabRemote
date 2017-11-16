@@ -37,7 +37,7 @@ namespace LakeLabRemote.Controllers
                 _dbContext.ValuesDO.Remove(elem);
             }
             _dbContext.SaveChangesAsync();
-            return View(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
     }
 }

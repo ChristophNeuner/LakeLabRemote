@@ -41,24 +41,23 @@ namespace LakeLabRemote.Models
         public string Ip { get; set; }
 
 
-        public delegate void DeviceEditedEventHandler(object sender, DeviceEditedEventArgs e);
-        public event DeviceEditedEventHandler DeviceEditedEvent;
-        protected virtual void RaiseDeviceEditedEvent(Device newDevice)
-        {
-            if (DeviceEditedEvent != null)
-            {
-                DeviceEditedEvent(this, new DeviceEditedEventArgs(newDevice));
-            }
-        }
+        //public delegate void DeviceEditedEventHandler(object sender, DeviceEditedEventArgs e);
+        //public event DeviceEditedEventHandler DeviceEditedEvent;
+        //protected virtual void RaiseDeviceEditedEvent(Device newDevice)
+        //{
+        //    if (DeviceEditedEvent != null)
+        //    {
+        //        DeviceEditedEvent(this, new DeviceEditedEventArgs(newDevice));
+        //    }
+        //}
 
-        public class DeviceEditedEventArgs
-        {
-            public DeviceEditedEventArgs(Device newDev)
-            {
-                NewDevice = newDev;
-            }
-            public Device NewDevice { get; private set; }
-        }
-
+        //public class DeviceEditedEventArgs
+        //{
+        //    public DeviceEditedEventArgs(Device newDev)
+        //    {
+        //        NewDevice = newDev;
+        //    }
+        //    public Device NewDevice { get; private set; }
+        //}
     }
 }

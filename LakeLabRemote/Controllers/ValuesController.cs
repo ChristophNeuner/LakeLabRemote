@@ -67,7 +67,7 @@ namespace LakeLabRemote.Controllers
                 }
                 else
                 {
-                    return "All values already existed";
+                    return "All values have already been transmitted.";
                 }
             }
             else
