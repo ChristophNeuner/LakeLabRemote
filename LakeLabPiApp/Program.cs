@@ -16,7 +16,7 @@ namespace LakeLabPiApp
         private static string sensorType = "do";
         private static ValueModel model;
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             while (true)
             {
@@ -25,7 +25,7 @@ namespace LakeLabPiApp
                 model.Items.AddRange(dbreader.ReadDb(databasePath));
                 HttpHelper httphelper = new HttpHelper();
                 //string response = await httphelper.PostDataAsync(uriFalse, model);
-                string response = httphelper.PostDataAsync(uri, model).Result;
+                string response = await httphelper.PostDataAsync(uri, model);
                 //Console.WriteLine(response.IsSuccessStatusCode);
                 Console.WriteLine(response);
 
