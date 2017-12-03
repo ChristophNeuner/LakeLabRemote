@@ -55,6 +55,7 @@ namespace LakeLabRemote.Controllers
             List<Device> devices = await _dbContext.Devices.Where(p => p.Id == id).ToListAsync();
             _dbContext.Devices.RemoveRange(devices);
             List<AppUserDevice> appUserDevices = await _dbContext.AppUserDeviceAssociation.Where(p => p.DeviceId == id).ToListAsync();
+            _dbContext.AppUserDeviceAssociation.RemoveRange(appUserDevices);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

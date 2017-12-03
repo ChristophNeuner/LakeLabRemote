@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LakeLabRemote.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LakeLabRemote.DataSource
 {
@@ -14,6 +15,13 @@ namespace LakeLabRemote.DataSource
         public DbSet<Device> Devices { get; set; }
         public DbSet<ValueDO> ValuesDO { get; set; } 
         public DbSet<AppUserDevice> AppUserDeviceAssociation { get; set; }
+
+
+        //public static async Task InitTestPi(IServiceProvider serviceProvider)
+        //{
+        //    LakeLabDbContext dbContext = serviceProvider.GetRequiredService<LakeLabDbContext>();
+        //    await dbContext.Devices.AddAsync(new Device("test", "test", "test", "ground"));
+        //}
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

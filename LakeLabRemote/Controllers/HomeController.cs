@@ -22,7 +22,7 @@ namespace LakeLabRemote.Controllers
         public async Task<IActionResult> Index()
         {
             var valuesDO = await _dbContext.QueryValuesAsync(p => p);
-            return View(valuesDO);
+            return View(valuesDO.Reverse<Value>());
         }
 
         public IActionResult Error()

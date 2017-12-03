@@ -11,8 +11,8 @@ using System;
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
     [DbContext(typeof(LakeLabDbContext))]
-    [Migration("20171010210137_LakeLabDb2")]
-    partial class LakeLabDb2
+    [Migration("20171130214728_LakeLabDb")]
+    partial class LakeLabDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,20 @@ namespace LakeLabRemote.Migrations.LakeLabDb
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+
+            modelBuilder.Entity("LakeLabRemote.Models.AppUserDevice", b =>
+                {
+                    b.Property<string>("ComposedKey")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<Guid>("DeviceId");
+
+                    b.HasKey("ComposedKey");
+
+                    b.ToTable("AppUserDeviceAssociation");
+                });
 
             modelBuilder.Entity("LakeLabRemote.Models.Device", b =>
                 {
@@ -45,18 +59,18 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
             modelBuilder.Entity("LakeLabRemote.Models.ValueDO", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("Guid")
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Data");
 
-                    b.Property<Guid?>("DeviceGuid");
+                    b.Property<Guid?>("DeviceId");
 
                     b.Property<DateTime>("Timestamp");
 
-                    b.HasKey("Id");
+                    b.HasKey("Guid");
 
-                    b.HasIndex("DeviceGuid");
+                    b.HasIndex("DeviceId");
 
                     b.ToTable("ValuesDO");
                 });
@@ -65,7 +79,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                 {
                     b.HasOne("LakeLabRemote.Models.Device", "Device")
                         .WithMany()
-                        .HasForeignKey("DeviceGuid");
+                        .HasForeignKey("DeviceId");
                 });
 #pragma warning restore 612, 618
         }

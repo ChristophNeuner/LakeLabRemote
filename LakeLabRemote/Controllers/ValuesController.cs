@@ -19,9 +19,9 @@ namespace LakeLabRemote.Controllers
     {
         private LakeLabDbContext _dbContext;
 
-        public ValuesController(LakeLabDbContext valuesContext, DataSource.LakeLabDbContext devicesContext)
+        public ValuesController(LakeLabDbContext context, DataSource.LakeLabDbContext devicesContext)
         {
-            _dbContext = valuesContext;
+            _dbContext = context;
         }
 
         [HttpPost]
@@ -29,6 +29,8 @@ namespace LakeLabRemote.Controllers
         {
             if (model == null)
                 return "The provided data model is null.";
+
+            await LakeLabContextExtension.SaveDeviceIp(_dbContext, model.DeviceName, HttpContext.Connection.RemoteIpAddress.ToString());
 
             if (model.SensorType == "do")
             {

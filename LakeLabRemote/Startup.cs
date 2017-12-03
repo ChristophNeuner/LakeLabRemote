@@ -8,6 +8,7 @@ using LakeLabRemote.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Threading.Tasks;
 
 namespace LakeLabRemote
 {
@@ -33,8 +34,8 @@ namespace LakeLabRemote
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
-            //services.AddDbContext<LakeLabDbContext>(options => options.UseMySql(connectionString));
-            services.AddDbContext<LakeLabDbContext>(options => options.UseInMemoryDatabase("inMemoryDb"));
+            services.AddDbContext<LakeLabDbContext>(options => options.UseMySql(connectionString));
+            //services.AddDbContext<LakeLabDbContext>(options => options.UseInMemoryDatabase("inMemoryDb"));
             services.AddSingleton<LakeLabDbContext>();
             services.AddMvc();
             services.AddMemoryCache();
@@ -66,6 +67,8 @@ namespace LakeLabRemote
             //var DB = app.ApplicationServices.GetRequiredService<AppIdentityDbContext>();
             //DB.Database.EnsureCreated();
             app.UseMvcWithDefaultRoute();
+
+            //await LakeLabDbContext.InitTestPi(app.ApplicationServices);
         }
     }
 }

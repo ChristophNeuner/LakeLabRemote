@@ -76,5 +76,21 @@ namespace LakeLabRemote.DataSource
             else
                 return true;
         }
+
+        public static async Task SaveDeviceIp(this LakeLabDbContext context, string deviceName, string deviceIp)
+        {
+            if (String.IsNullOrWhiteSpace(deviceName))
+                throw new NullReferenceException(nameof(deviceName));
+            if (String.IsNullOrWhiteSpace(deviceIp))
+                throw new NullReferenceException(nameof(deviceIp));
+
+            List<Device> devices = await context.Devices.Where(p => p.Name == deviceName).ToListAsync();
+            foreach(var device in devices)
+            {
+                device.Ip = deviceIp;
+            }
+            context.Devices.UpdateRange(devices);
+            await context.SaveChangesAsync();
+        }
     }
 }
