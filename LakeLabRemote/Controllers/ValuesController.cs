@@ -42,6 +42,7 @@ namespace LakeLabRemote.Controllers
                 }
 
                 List<ValueDO> valuesDoToSave = new List<ValueDO>();
+                List<ValueTemp> valuesTempToSave = new List<ValueTemp>();
                 List<Device> deviceList = _dbContext.Devices.Where(d => d.Name == model.DeviceName).ToList();
                 Device device;
                 if (deviceList.Count() == 0)
@@ -57,15 +58,17 @@ namespace LakeLabRemote.Controllers
 
                 foreach (var value in ValueItemsToSave)
                 {
-                    valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data));
+                    valuesDoToSave.Add(new ValueDO(value.Timestamp, device, value.Data, value.Temperature));
+                    valuesTempToSave.Add(new ValueTemp(value.Timestamp, device, value.Temperature));
                 }
 
                 await _dbContext.ValuesDO.AddRangeAsync(valuesDoToSave);
+                await _dbContext.ValuesTemp.AddRangeAsync(valuesTempToSave);
                 await _dbContext.SaveChangesAsync();
 
                 if (valuesDoToSave.Count() != 0)
                 {
-                    return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{valuesDoToSave.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
+                    return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{valuesDoToSave.Select(p => $"{p.Timestamp}: {p.Data}, {p.Temperature}").Aggregate((e, c) => e + Environment.NewLine + c)}";
                 }
                 else
                 {

@@ -13,7 +13,8 @@ namespace LakeLabRemote.DataSource
         public LakeLabDbContext(DbContextOptions<LakeLabDbContext> options) : base(options){}
 
         public DbSet<Device> Devices { get; set; }
-        public DbSet<ValueDO> ValuesDO { get; set; } 
+        public DbSet<ValueDO> ValuesDO { get; set; }
+        public DbSet<ValueTemp> ValuesTemp { get; set; }
         public DbSet<AppUserDevice> AppUserDeviceAssociation { get; set; }
 
 

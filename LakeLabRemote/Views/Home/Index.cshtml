@@ -9,16 +9,16 @@
 <div class="panel-body bg-primary"><h4>Werte</h4></div>
 
 <table class="table table-condensed table-bordered">
-    <tr><th>Zeit</th><th>Ort</th><th>Tiefe</th><th>O2-Gehalt (mg/l)</th></tr>
+    <tr><th>Zeit</th><th>Ort</th><th>Tiefe</th><th>O2-Gehalt (mg/l)</th><th>Temperatur</th></tr>
     @if (Model == null || Model.Count() == 0)
     {
-        <tr><td colspan="3" class="text-center">Keine Werte vorhanden.</td></tr>
+        <tr><td colspan="5" class="text-center">Keine Werte vorhanden.</td></tr>
     }
     else
     {
         @foreach(ValueDO value in Model)
         {
-            <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td></tr>
+            <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td><td>@value.Temperature</td></tr>
         }
     }
 </table>

@@ -23,12 +23,12 @@ namespace LakeLabPiApp
                 {
                     var selectCommand = connection.CreateCommand();
                     selectCommand.Transaction = transaction;
-                    selectCommand.CommandText = "SELECT timestamp, val1 FROM DO";
+                    selectCommand.CommandText = "SELECT timestamp, val1, temp FROM DO";
                     using (var reader = selectCommand.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            items.Add(new ValueItemModel(reader.GetDateTime(0), reader.GetFloat(1)));
+                            items.Add(new ValueItemModel(reader.GetDateTime(0), reader.GetFloat(1), reader.GetFloat(2)));
                         }
                     }
                     transaction.Commit();

@@ -7,10 +7,11 @@ namespace LakeLabLib
 {
     public class ValueItemModel
     {
-        public ValueItemModel(DateTime timestamp, float data)
+        public ValueItemModel(DateTime timestamp, float data, float temperature)
         {
             Timestamp = timestamp;
             Data = data;
+            Temperature = temperature;
         }
 
         [JsonProperty("timestamp")]
@@ -18,5 +19,8 @@ namespace LakeLabLib
 
         [JsonProperty("data")]
         public float Data { get; set; }
+
+        [JsonProperty("temperature")]
+        public float Temperature { get; set; }
     }
 }

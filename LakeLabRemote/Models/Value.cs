@@ -54,8 +54,23 @@ namespace LakeLabRemote.Models
     /// </summary>
     public class ValueDO : Value
     {       
-        public ValueDO(DateTime timestamp, Device device, float data) : base(timestamp, device, data){}
+        public ValueDO(DateTime timestamp, Device device, float data, float temperature) : base(timestamp, device, data)
+        {
+            Temperature = temperature;
+        }
+
+        public float Temperature { get; set; }
 
         public ValueDO() { }
+    }
+
+    /// <summary>
+    /// Class for a temperature value.
+    /// </summary>
+    public class ValueTemp : Value
+    {
+        public ValueTemp(DateTime timestamp, Device device, float data) : base(timestamp, device, data) { }
+
+        public ValueTemp() { }
     }
 }
