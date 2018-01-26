@@ -24,9 +24,9 @@ namespace LakeLabRemote.Controllers
             _identityDbContext = identityDbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_dbContext.Devices.ToList());
+            return View(await _dbContext.Devices.ToListAsync());
         }
 
         public IActionResult CreateDevice() => View();

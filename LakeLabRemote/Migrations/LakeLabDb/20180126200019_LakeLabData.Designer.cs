@@ -11,8 +11,8 @@ using System;
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
     [DbContext(typeof(LakeLabDbContext))]
-    [Migration("20171130214728_LakeLabDb")]
-    partial class LakeLabDb
+    [Migration("20180126200019_LakeLabData")]
+    partial class LakeLabData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,8 @@ namespace LakeLabRemote.Migrations.LakeLabDb
 
                     b.Property<Guid?>("DeviceId");
 
+                    b.Property<float>("Temperature");
+
                     b.Property<DateTime>("Timestamp");
 
                     b.HasKey("Guid");
@@ -75,7 +77,32 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                     b.ToTable("ValuesDO");
                 });
 
+            modelBuilder.Entity("LakeLabRemote.Models.ValueTemp", b =>
+                {
+                    b.Property<Guid>("Guid")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("Data");
+
+                    b.Property<Guid?>("DeviceId");
+
+                    b.Property<DateTime>("Timestamp");
+
+                    b.HasKey("Guid");
+
+                    b.HasIndex("DeviceId");
+
+                    b.ToTable("ValuesTemp");
+                });
+
             modelBuilder.Entity("LakeLabRemote.Models.ValueDO", b =>
+                {
+                    b.HasOne("LakeLabRemote.Models.Device", "Device")
+                        .WithMany()
+                        .HasForeignKey("DeviceId");
+                });
+
+            modelBuilder.Entity("LakeLabRemote.Models.ValueTemp", b =>
                 {
                     b.HasOne("LakeLabRemote.Models.Device", "Device")
                         .WithMany()

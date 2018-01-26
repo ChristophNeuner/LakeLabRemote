@@ -11,7 +11,7 @@ using System;
 namespace LakeLabRemote.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20171004182200_LakeLabUsers")]
+    [Migration("20180126183911_LakeLabUsers")]
     partial class LakeLabUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
