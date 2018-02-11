@@ -28,7 +28,7 @@ namespace LakeLabPiApp
                 string response = await httphelper.PostDataAsync(uri, model);
                 Console.WriteLine(response);
 
-                System.Threading.Thread.Sleep(20000);
+                System.Threading.Thread.Sleep(10000);
             }
         }
     }

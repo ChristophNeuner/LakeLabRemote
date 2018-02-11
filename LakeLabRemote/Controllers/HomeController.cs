@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace LakeLabRemote.Controllers
 {
@@ -30,13 +31,11 @@ namespace LakeLabRemote.Controllers
             return View();
         }
 
-        public IActionResult DeleteAllValues()
+        public async Task<IActionResult> DeleteAllValues()
         {
-            foreach (var elem in _dbContext.ValuesDO)
-            {
-                _dbContext.ValuesDO.Remove(elem);
-            }
-            _dbContext.SaveChangesAsync();
+            var allValuesDO = await _dbContext.QueryValuesDOAsync(p => p);
+            _dbContext.ValuesDO.RemoveRange(allValuesDO);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }

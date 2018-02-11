@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Threading.Tasks;
+using LakeLabRemote.DataSourceAPI;
 
 namespace LakeLabRemote
 {
@@ -30,16 +31,22 @@ namespace LakeLabRemote
 
             services.AddTransient<IPasswordValidator<AppUser>, CustomPasswordValidator>();
             services.AddTransient<IUserValidator<AppUser>, CustomUserValidator>();
+
             services.AddDbContext<AppIdentityDbContext>(options => options.UseMySql(connectionString));
             services.AddIdentity<AppUser, IdentityRole>(opts => {
                 opts.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
             services.AddDbContext<LakeLabDbContext>(options => options.UseMySql(connectionString));
             //services.AddDbContext<LakeLabDbContext>(options => options.UseInMemoryDatabase("inMemoryDb"));
-            services.AddSingleton<LakeLabDbContext>();
+
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
+
+            //Singletons
+            services.AddSingleton<LakeLabDbContext>();
+            services.AddSingleton<ValueStorage>();
+            services.AddSingleton<DeviceStorage>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

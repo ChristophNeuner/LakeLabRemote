@@ -32,6 +32,21 @@ namespace LakeLabRemote.DataSource
             return await queryShaper(context.ValuesDO.Include(p => p.Device)).ToListAsync();
         }
 
+        public static async Task<IEnumerable<T>> QueryValuesDOAsync<T>(this LakeLabDbContext context, Func<IQueryable<ValueDO>, IQueryable<T>> queryShaper)
+        {
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (queryShaper == null)
+            {
+                throw new ArgumentNullException(nameof(queryShaper));
+            }
+
+            return await queryShaper(context.ValuesDO.Include(p => p.Device)).ToListAsync();
+        }
+
         public static Task<T> QueryValuesAsync<T>(this LakeLabDbContext context, Func<IQueryable<Value>, Task<T>> queryShaper)
         {
             if (context == null)
@@ -55,7 +70,7 @@ namespace LakeLabRemote.DataSource
             List<AppUserDevice> associations = await context.AppUserDeviceAssociation.Where(p => p.AppUserId == userId).ToListAsync();
             List<Device> allDevices = await context.Devices.ToListAsync();
             List<Device> accessibleDevices = new List<Device>();
-            foreach(var elem in associations)
+            foreach (var elem in associations)
             {
                 accessibleDevices.Add(allDevices.FirstOrDefault(p => p.Id == elem.DeviceId));
             }
@@ -75,22 +90,6 @@ namespace LakeLabRemote.DataSource
                 return false;
             else
                 return true;
-        }
-
-        public static async Task SaveDeviceIp(this LakeLabDbContext context, string deviceName, string deviceIp)
-        {
-            if (String.IsNullOrWhiteSpace(deviceName))
-                throw new NullReferenceException(nameof(deviceName));
-            if (String.IsNullOrWhiteSpace(deviceIp))
-                throw new NullReferenceException(nameof(deviceIp));
-
-            List<Device> devices = await context.Devices.Where(p => p.Name == deviceName).ToListAsync();
-            foreach(var device in devices)
-            {
-                device.Ip = deviceIp;
-            }
-            context.Devices.UpdateRange(devices);
-            await context.SaveChangesAsync();
-        }
+        }       
     }
 }
