@@ -43,10 +43,9 @@ namespace LakeLabRemote
             services.AddMemoryCache();
             services.AddSession();
 
-            //Singletons
-            services.AddSingleton<LakeLabDbContext>();
-            services.AddSingleton<ValueStorage>();
-            services.AddSingleton<DeviceStorage>();
+
+            services.AddTransient<ValueStorage>();
+            services.AddTransient<DeviceStorage>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

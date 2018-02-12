@@ -41,11 +41,8 @@ namespace LakeLabRemote.Controllers
             if (model.SensorType == null)
                 throw new ArgumentNullException(nameof(model.SensorType));
 
-
             await _deviceStorage.SaveDeviceIpAsync(model.DeviceName, HttpContext.Connection.RemoteIpAddress.ToString());
-
-            _valueStorage.QueueNewValues(model);
-
+            await _valueStorage.SaveValuesToDbAsync(model);
             return "Success";
             //return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{model.Items.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
         }

@@ -10,9 +10,7 @@ namespace LakeLabRemote.DataSourceAPI
 {
     public class DeviceStorage
     {
-
         private LakeLabDbContext _dbContext;
-
 
         public DeviceStorage(LakeLabDbContext context)
         {
