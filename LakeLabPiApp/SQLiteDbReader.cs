@@ -23,12 +23,19 @@ namespace LakeLabPiApp
                 {
                     var selectCommand = connection.CreateCommand();
                     selectCommand.Transaction = transaction;
-                    selectCommand.CommandText = "SELECT timestamp, val1, temp FROM DO";
+                    if(databasePath.Contains("DO"))
+                    {
+                        selectCommand.CommandText = "SELECT timestamp, val1 FROM DO";
+                    }
+                    else
+                    {
+                        selectCommand.CommandText = "SELECT timestamp, val1 FROM RTD";
+                    }
                     using (var reader = selectCommand.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            items.Add(new ValueItemModel(reader.GetDateTime(0), reader.GetFloat(1), reader.GetFloat(2)));
+                            items.Add(new ValueItemModel(reader.GetDateTime(0), reader.GetFloat(1)));
                         }
                     }
                     transaction.Commit();

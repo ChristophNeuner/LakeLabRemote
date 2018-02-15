@@ -30,20 +30,21 @@ namespace LakeLabRemote.Controllers
         }
 
         [HttpPost]
-        public async Task<string> ReceiveValues([FromBody]ValueModel model)
+        public async Task<string> ReceiveValues([FromBody]List<ValueModel> models)
         {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model));
-            if (model.Items == null)
-                throw new ArgumentNullException(nameof(model.Items));
-            if (model.DeviceName == null)
-                throw new ArgumentNullException(nameof(model.DeviceName));
-            if (model.SensorType == null)
-                throw new ArgumentNullException(nameof(model.SensorType));
+            if (models == null)
+                throw new ArgumentNullException(nameof(models));
 
-            await _deviceStorage.SaveDeviceIpAsync(model.DeviceName, HttpContext.Connection.RemoteIpAddress.ToString());
-            await _valueStorage.SaveValuesToDbAsync(model);
-            return "Success";
+            string result = "stored: ";
+
+            foreach(ValueModel elem in models)
+            {
+                await _deviceStorage.SaveDeviceIpAsync(elem.DeviceName, HttpContext.Connection.RemoteIpAddress.ToString());
+                await _valueStorage.SaveValuesToDbAsync(elem);
+                result += elem.SensorType.ToString();
+            }
+
+            return result;
             //return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{model.Items.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
         }
     }

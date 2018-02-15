@@ -3,26 +3,42 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using LakeLabLib;
 
 namespace LakeLabRemote.Models
 {
-    public abstract class Value
+    public class Value
     {
-        protected Value(DateTime timestamp, Device device, float data)
+        public Value(DateTime timestamp, Device device, float data, Enums.SensorTypes sensorType)
         {
             Guid = new Guid();
             Timestamp = timestamp;
             Device = device;
-            Data = data;           
+            Data = data;
+            SensorType = sensorType;
         }
 
-        protected Value() { }
+        private Value() { }
 
         [Key]
         public Guid Guid { get; set; }
         public DateTime Timestamp { get; set; }
         public Device Device { get; set; }
         public float Data { get; set; }
+        public Enums.SensorTypes SensorType { get; set; }
+        public string DataUnit { get
+            {
+                switch (SensorType)
+                {
+                    case Enums.SensorTypes.Dissolved_Oxygen:
+                        return "mg/L";
+                    case Enums.SensorTypes.Temperature:
+                        return "°C";
+                    default:
+                        return "unknown";
+                }
+            }
+        }
 
         public static bool operator ==(Value a, Value b)
         {
@@ -39,38 +55,12 @@ namespace LakeLabRemote.Models
             }
 
             // Return true if the fields match:
-            return a.Timestamp == b.Timestamp && a.Device == b.Device && a.Data == b.Data;
+            return a.Timestamp == b.Timestamp && a.Device == b.Device && a.Data == b.Data && a.SensorType == b.SensorType;
         }
 
         public static bool operator !=(Value a, Value b)
         {
             return !(a == b);
         }
-    }
-
-
-    /// <summary>
-    /// Class for a dissolved oxygen value.
-    /// </summary>
-    public class ValueDO : Value
-    {       
-        public ValueDO(DateTime timestamp, Device device, float data, float temperature) : base(timestamp, device, data)
-        {
-            Temperature = temperature;
-        }
-
-        public float Temperature { get; set; }
-
-        public ValueDO() { }
-    }
-
-    /// <summary>
-    /// Class for a temperature value.
-    /// </summary>
-    public class ValueTemp : Value
-    {
-        public ValueTemp(DateTime timestamp, Device device, float data) : base(timestamp, device, data) { }
-
-        public ValueTemp() { }
     }
 }

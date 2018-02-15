@@ -20,6 +20,7 @@ namespace LakeLabRemote.DataSourceAPI
         public async Task SaveNewDeviceToDbAsync(Device device)
         {
             await _dbContext.Devices.AddAsync(device);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task SaveDeviceIpAsync(string deviceName, string deviceIp)

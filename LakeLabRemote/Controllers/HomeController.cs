@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
 using Microsoft.EntityFrameworkCore;
+using LakeLabLib;
+using LakeLabRemote.DataSourceAPI;
 
 namespace LakeLabRemote.Controllers
 {
@@ -14,15 +16,17 @@ namespace LakeLabRemote.Controllers
     public class HomeController : Controller
     {
         LakeLabDbContext _dbContext;
+        ValueStorage _valueStorage;
 
-        public HomeController(LakeLabDbContext context)
+        public HomeController(LakeLabDbContext context, ValueStorage vs)
         {
             _dbContext = context;
+            _valueStorage = vs;
         }
 
         public async Task<IActionResult> Index()
         {
-            var valuesDO = await _dbContext.QueryValuesAsync(p => p);
+            var valuesDO = await _dbContext.QueryValuesAsync(p => p, Enums.SensorTypes.Dissolved_Oxygen);
             return View(valuesDO.Reverse<Value>());
         }
 
@@ -33,9 +37,7 @@ namespace LakeLabRemote.Controllers
 
         public async Task<IActionResult> DeleteAllValues()
         {
-            var allValuesDO = await _dbContext.QueryValuesDOAsync(p => p);
-            _dbContext.ValuesDO.RemoveRange(allValuesDO);
-            await _dbContext.SaveChangesAsync();
+            await _valueStorage.DeleteAllValuesAsync();
             return RedirectToAction(nameof(Index));
         }
     }

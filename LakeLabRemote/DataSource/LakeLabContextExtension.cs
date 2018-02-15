@@ -1,4 +1,5 @@
-﻿using LakeLabRemote.Models;
+﻿using LakeLabLib;
+using LakeLabRemote.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace LakeLabRemote.DataSource
             return await context.Devices.Where(p => p.Name == name).ToListAsync();
         }
 
-        public static async Task<IEnumerable<T>> QueryValuesAsync<T>(this LakeLabDbContext context, Func<IQueryable<Value>, IQueryable<T>> queryShaper)
+        public static async Task<IEnumerable<T>> QueryValuesAsync<T>(this LakeLabDbContext context, Func<IQueryable<Value>, IQueryable<T>> queryShaper, Enums.SensorTypes sensorType)
         {
             if (context == null)
             {
@@ -29,10 +30,10 @@ namespace LakeLabRemote.DataSource
                 throw new ArgumentNullException(nameof(queryShaper));
             }
 
-            return await queryShaper(context.ValuesDO.Include(p => p.Device)).ToListAsync();
+            return await queryShaper(context.Values.Include(p => p.Device).Where(p => p.SensorType == sensorType)).ToListAsync();        
         }
 
-        public static async Task<IEnumerable<T>> QueryValuesDOAsync<T>(this LakeLabDbContext context, Func<IQueryable<ValueDO>, IQueryable<T>> queryShaper)
+        public static Task<T> QueryValuesAsync<T>(this LakeLabDbContext context, Func<IQueryable<Value>, Task<T>> queryShaper, Enums.SensorTypes sensorType)
         {
             if (context == null)
             {
@@ -44,22 +45,7 @@ namespace LakeLabRemote.DataSource
                 throw new ArgumentNullException(nameof(queryShaper));
             }
 
-            return await queryShaper(context.ValuesDO.Include(p => p.Device)).ToListAsync();
-        }
-
-        public static Task<T> QueryValuesAsync<T>(this LakeLabDbContext context, Func<IQueryable<Value>, Task<T>> queryShaper)
-        {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
-            if (queryShaper == null)
-            {
-                throw new ArgumentNullException(nameof(queryShaper));
-            }
-
-            return queryShaper(context.ValuesDO.Include(p => p.Device));
+            return queryShaper(context.Values.Include(p => p.Device).Where(p => p.SensorType == sensorType));
         }
 
         public static async Task<IEnumerable<Device>> QueryAppUserDeviceAssociationAsync(this LakeLabDbContext context, string userId)

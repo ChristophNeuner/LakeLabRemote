@@ -16,9 +16,9 @@
     }
     else
     {
-        @foreach(ValueDO value in Model)
+        @foreach(Value value in Model)
         {
-            <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td><td>@value.Temperature</td></tr>
+            <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td>></tr>
         }
     }
 </table>

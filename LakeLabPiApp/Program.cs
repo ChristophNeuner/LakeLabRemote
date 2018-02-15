@@ -2,20 +2,21 @@
 using System.Net.Http;
 using LakeLabLib;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace LakeLabPiApp
 {
     class Program
     {
         private static string uri = "http://localhost:50992/Values/ReceiveValues";
-        private static string databasePath = @"D:\DO.sqlite";
+        private static string databasePathDO = @"D:\DO.sqlite";
+        private static string databasePathTemp = @"D:\RTD.sqlite";
 
         //private static string uri = "http://212.227.175.108/Values/ReceiveValues";
-        //private static string databasePath = @"/home/pi/iniac/data/DO.sqlite";
+        //private static string databasePathDO = @"/home/pi/iniac/data/DO.sqlite";
+        //private static string databasePathTemp = @"/home/pi/iniac/data/RTD.sqlite";
 
         private static string deviceName = "pi1";
-        private static string sensorType = "do";
-        private static ValueModel model;
 
         private static SQLiteDbReader dbreader = new SQLiteDbReader();
         private static HttpHelper httphelper = new HttpHelper();
@@ -24,9 +25,17 @@ namespace LakeLabPiApp
         {           
             while (true)
             {
-                model = new ValueModel(deviceName, sensorType);               
-                model.Items.AddRange(dbreader.ReadDb(databasePath));               
-                string response = await httphelper.PostDataAsync(uri, model);
+                List<ValueModel>  valueModels = new List<ValueModel>();
+
+                ValueModel modelDO = new ValueModel(deviceName, Enums.SensorTypes.Dissolved_Oxygen);               
+                modelDO.Items.AddRange(dbreader.ReadDb(databasePathDO));
+                ValueModel modelTemp = new ValueModel(deviceName, Enums.SensorTypes.Temperature);
+                modelTemp.Items.AddRange(dbreader.ReadDb(databasePathTemp));
+
+                valueModels.Add(modelDO);
+                valueModels.Add(modelTemp);
+
+                string response = await httphelper.PostDataAsync(uri, valueModels);
                 Console.WriteLine(response);
                 System.Threading.Thread.Sleep(1000);
             }

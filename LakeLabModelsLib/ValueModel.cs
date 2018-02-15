@@ -5,7 +5,7 @@ namespace LakeLabLib
 {
     public sealed class ValueModel
     {
-        public ValueModel(string deviceName, string sensorType)
+        public ValueModel(string deviceName, Enums.SensorTypes sensorType)
         {
             DeviceName = deviceName;
             SensorType = sensorType;
@@ -15,7 +15,7 @@ namespace LakeLabLib
         public string DeviceName { get; set; }
 
         [JsonProperty("sensorType")]
-        public string SensorType { get; set; }
+        public Enums.SensorTypes SensorType { get; set; }
 
         [JsonProperty("items")]
         public List<ValueItemModel> Items { get; } = new List<ValueItemModel>();

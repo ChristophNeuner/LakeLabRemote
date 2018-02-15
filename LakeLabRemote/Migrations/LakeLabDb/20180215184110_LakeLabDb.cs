@@ -39,19 +39,20 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "ValuesDO",
+                name: "Values",
                 columns: table => new
                 {
                     Guid = table.Column<Guid>(type: "char(36)", nullable: false),
                     Data = table.Column<float>(type: "float", nullable: false),
                     DeviceId = table.Column<Guid>(type: "char(36)", nullable: true),
+                    SensorType = table.Column<int>(type: "int", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ValuesDO", x => x.Guid);
+                    table.PrimaryKey("PK_Values", x => x.Guid);
                     table.ForeignKey(
-                        name: "FK_ValuesDO_Devices_DeviceId",
+                        name: "FK_Values_Devices_DeviceId",
                         column: x => x.DeviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
@@ -59,8 +60,8 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ValuesDO_DeviceId",
-                table: "ValuesDO",
+                name: "IX_Values_DeviceId",
+                table: "Values",
                 column: "DeviceId");
         }
 
@@ -70,7 +71,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                 name: "AppUserDeviceAssociation");
 
             migrationBuilder.DropTable(
-                name: "ValuesDO");
+                name: "Values");
 
             migrationBuilder.DropTable(
                 name: "Devices");
