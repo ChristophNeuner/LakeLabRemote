@@ -16,6 +16,15 @@ namespace LakeLabRemote.Models
             Device = device;
             Data = data;
             SensorType = sensorType;
+            switch (SensorType)
+            {
+                case Enums.SensorTypes.Dissolved_Oxygen:
+                    DataUnit = "mg/L";
+                    break;
+                case Enums.SensorTypes.Temperature:
+                    DataUnit = "°C";
+                    break;
+            }
         }
 
         private Value() { }
@@ -26,19 +35,7 @@ namespace LakeLabRemote.Models
         public Device Device { get; set; }
         public float Data { get; set; }
         public Enums.SensorTypes SensorType { get; set; }
-        public string DataUnit { get
-            {
-                switch (SensorType)
-                {
-                    case Enums.SensorTypes.Dissolved_Oxygen:
-                        return "mg/L";
-                    case Enums.SensorTypes.Temperature:
-                        return "°C";
-                    default:
-                        return "unknown";
-                }
-            }
-        }
+        public string DataUnit { get; set; }
 
         public static bool operator ==(Value a, Value b)
         {

@@ -12,9 +12,10 @@ using System;
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
     [DbContext(typeof(LakeLabDbContext))]
-    partial class LakeLabDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180216135657_LakeLabDb2")]
+    partial class LakeLabDb2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
