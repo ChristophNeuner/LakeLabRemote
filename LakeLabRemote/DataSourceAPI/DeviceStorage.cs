@@ -1,5 +1,6 @@
 ﻿using LakeLabRemote.DataSource;
 using LakeLabRemote.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,17 @@ namespace LakeLabRemote.DataSourceAPI
             }
             _dbContext.Devices.UpdateRange(devices);
             await _dbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Gets a list of the devices the currently logged in user has access to. 
+        /// It only gets the latest entities.
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <returns></returns>
+        public async Task<List<Device>> GetCurrentUsersDevicesAsync(AppUser currentUser)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,6 +10,7 @@ using LakeLabRemote.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using LakeLabRemote.DataSourceAPI;
 
 namespace LakeLabRemote.Controllers
 {
@@ -18,10 +19,12 @@ namespace LakeLabRemote.Controllers
     {
         private AppIdentityDbContext _identityDbContext;
         private LakeLabDbContext _dbContext;
-        public DevicesController(LakeLabDbContext context, AppIdentityDbContext identityDbContext)
+        private DeviceStorage _deviceStorage;
+        public DevicesController(LakeLabDbContext context, AppIdentityDbContext identityDbContext, DeviceStorage deviceStorage)
         {
             _dbContext = context;
             _identityDbContext = identityDbContext;
+            _deviceStorage = deviceStorage;
         }
 
         public async Task<IActionResult> Index()

@@ -70,11 +70,8 @@ namespace LakeLabRemote
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
-            //var DB = app.ApplicationServices.GetRequiredService<AppIdentityDbContext>();
-            //DB.Database.EnsureCreated();
             app.UseMvcWithDefaultRoute();
 
-            //await LakeLabDbContext.InitTestPi(app.ApplicationServices);
             AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
