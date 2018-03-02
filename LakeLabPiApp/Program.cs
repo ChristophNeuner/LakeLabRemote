@@ -8,13 +8,13 @@ namespace LakeLabPiApp
 {
     class Program
     {
-        private static string uri = "http://localhost:50992/Values/ReceiveValues";
-        private static string databasePathDO = @"D:\DO.sqlite";
-        private static string databasePathTemp = @"D:\RTD.sqlite";
+        //private static string uri = "http://localhost:50992/Values/ReceiveValues";
+        //private static string databasePathDO = @"D:\DO.sqlite";
+        //private static string databasePathTemp = @"D:\RTD.sqlite";
 
-        //private static string uri = "http://212.227.175.108/Values/ReceiveValues";
-        //private static string databasePathDO = @"/home/pi/iniac/data/DO.sqlite";
-        //private static string databasePathTemp = @"/home/pi/iniac/data/RTD.sqlite";
+        private static string uri = "http://212.227.175.108/Values/ReceiveValues";
+        private static string databasePathDO = @"/home/pi/iniac/data/DO.sqlite";
+        private static string databasePathTemp = @"/home/pi/iniac/data/RTD.sqlite";
 
         private static string deviceName = "pi1";
 
