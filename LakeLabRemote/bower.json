@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "latest",
-    "jquery": "latest"
+    "jquery": "latest",
+    "flot": "latest"
   }
 }
