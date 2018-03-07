@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LakeLabRemote.DataSource;
-using LakeLabRemote.Models;
-using Microsoft.EntityFrameworkCore;
-using LakeLabLib;
 using LakeLabRemote.DataSourceAPI;
+using LakeLabRemote.ViewModels;
 
 namespace LakeLabRemote.Controllers
 {
@@ -17,17 +12,18 @@ namespace LakeLabRemote.Controllers
     {
         LakeLabDbContext _dbContext;
         ValueStorage _valueStorage;
+        DeviceStorage _deviceStorage;
 
-        public HomeController(LakeLabDbContext context, ValueStorage vs)
+        public HomeController(LakeLabDbContext context, ValueStorage vs, DeviceStorage ds)
         {
             _dbContext = context;
             _valueStorage = vs;
+            _deviceStorage = ds;
         }
 
         public async Task<IActionResult> Index()
         {
-            var valuesDO = await _dbContext.QueryValuesAsync(p => p, Enums.SensorTypes.Dissolved_Oxygen);
-            return View(valuesDO.Reverse<Value>());
+            return View(new HomeIndexViewModel(await _deviceStorage.GetCurrentUsersDevicesAsync()));
         }
 
         public IActionResult Error()
