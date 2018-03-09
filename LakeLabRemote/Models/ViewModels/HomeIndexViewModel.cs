@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LakeLabRemote.Models;
 
-namespace LakeLabRemote.ViewModels
+namespace LakeLabRemote.Models.ViewModels
 {
     /// <summary>
     /// View Model for the Home/Index page

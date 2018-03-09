@@ -7,39 +7,47 @@
 
 <div id="placeholder" style="width:600px;height:300px"></div>
 
+<br />
+<br />
+
 <a asp-action="DeleteAllValues" class="btn btn-primary btn-danger">Alle Werte löschen</a>
 
-@if(Model.CurrentDeviceEntities.Count == 0)
+<br />
+<br />
+<br />
+
+@if (Model.CurrentDeviceEntities.Count == 0)
 {
     <h3>Keine Geräte vorhanden.</h3>
 }
 else
 {
-    @foreach(Device device in Model.CurrentDeviceEntities)
-    {   
-       @*<div class="hidden-device-data" data-deviceName=@device?.Name hidden></div>*@
-       <tr><th>@device?.Name</th><th>@device?.Lake</th><th>@device?.Location</th><th>@device?.Depth</th></tr>
-       <div class="graph-wrapper">
-           <div class="graph-do graph"></div>
-           <div class="graph-temp graph"></div>
-       </div>
+    @foreach (Device device in Model.CurrentDeviceEntities)
+    {
+        <table class="table table-condensed table-bordered">
+            <tr><th>@device?.Name</th><th>@device?.Lake</th><th>@device?.Location</th><th>@device?.Depth</th></tr>
+        </table>
+        <div class="graph-wrapper">
+            <div class="graph-do graph"></div>
+            <div class="graph-temp graph"></div>
+        </div>
     }
 }
 
 
 
 @*<div class="panel-body bg-primary"><h4>Werte</h4></div>
-<table class="table table-condensed table-bordered">
-    <tr><th>Zeit</th><th>Ort</th><th>Tiefe</th><th>O2-Gehalt (mg/l)</th><th>Temperatur</th></tr>
-    @if (Model.Count() == 0)
-    {
-        <tr><td colspan="5" class="text-center">Keine Werte vorhanden.</td></tr>
-    }
-    else
-    {
-        @foreach (Value value in Model)
+    <table class="table table-condensed table-bordered">
+        <tr><th>Zeit</th><th>Ort</th><th>Tiefe</th><th>O2-Gehalt (mg/l)</th><th>Temperatur</th></tr>
+        @if (Model.Count() == 0)
         {
-            <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td></tr>
+            <tr><td colspan="5" class="text-center">Keine Werte vorhanden.</td></tr>
         }
-    }
-</table>*@
+        else
+        {
+            @foreach (Value value in Model)
+            {
+                <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td></tr>
+            }
+        }
+    </table>*@

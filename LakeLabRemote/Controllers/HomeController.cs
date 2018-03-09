@@ -3,27 +3,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using LakeLabRemote.DataSource;
 using LakeLabRemote.DataSourceAPI;
-using LakeLabRemote.ViewModels;
+using LakeLabRemote.Models.ViewModels;
+using LakeLabRemote.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace LakeLabRemote.Controllers
 {
     [Authorize(Roles = "Admins")]
     public class HomeController : Controller
     {
-        LakeLabDbContext _dbContext;
-        ValueStorage _valueStorage;
-        DeviceStorage _deviceStorage;
+        private LakeLabDbContext _dbContext;
+        private ValueStorage _valueStorage;
+        private DeviceStorage _deviceStorage;
+        private UserManager<AppUser> _userManager;
 
-        public HomeController(LakeLabDbContext context, ValueStorage vs, DeviceStorage ds)
+        public HomeController(LakeLabDbContext context, ValueStorage vs, DeviceStorage ds, UserManager<AppUser> um)
         {
             _dbContext = context;
             _valueStorage = vs;
             _deviceStorage = ds;
+            _userManager = um;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(new HomeIndexViewModel(await _deviceStorage.GetCurrentUsersDevicesAsync()));
+            return View(new HomeIndexViewModel(await _deviceStorage.GetCurrentUsersDevicesAsync(await _userManager.GetUserAsync(HttpContext.User))));
         }
 
         public IActionResult Error()

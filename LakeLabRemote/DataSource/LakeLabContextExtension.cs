@@ -18,6 +18,17 @@ namespace LakeLabRemote.DataSource
             return await context.Devices.Where(p => p.Name == name).ToListAsync();
         }
 
+        public static async Task<Device> QueryDevicesAsync(this LakeLabDbContext context, Guid deviceId)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+            if (deviceId == null)
+                throw new ArgumentNullException(nameof(deviceId));
+
+            List<Device> devices = await context.Devices.Where(p => p.Id == deviceId).ToListAsync();
+            return devices.First();
+        }
+
         public static async Task<IEnumerable<T>> QueryValuesAsync<T>(this LakeLabDbContext context, Func<IQueryable<Value>, IQueryable<T>> queryShaper, Enums.SensorTypes sensorType)
         {
             if (context == null)

@@ -46,9 +46,9 @@ namespace LakeLabRemote.DataSourceAPI
         /// </summary>
         /// <param name="currentUser"></param>
         /// <returns></returns>
-        public async Task<List<Device>> GetCurrentUsersDevicesAsync(AppUser currentUser)
+        public async Task<List<Device>> GetCurrentUsersDevicesAsync(AppUser user)
         {
-            throw new NotImplementedException();
+            return (List<Device>)await _dbContext.QueryAppUserDeviceAssociationAsync(user.Id);
         }
     }
 }
