@@ -55,12 +55,12 @@ namespace LakeLabRemote.Controllers
         }
 
         /// <summary>
-        /// The WebApp's JavaScript calls this method to get values for plotting in a Json format.
+        /// The WebApp's JavaScript calls this method to get values in a Json format for plotting.
         /// </summary>
-        /// <param name="deviceId">The Id of the device entity you want to get the values from. That means you can have</param>
+        /// <param name="deviceId">The Id of the device entity you want to get the values from</param>
         /// <param name="sensorType"></param>
         /// <param name="days">From how many days ago unitl today you want to have the values.</param>
-        /// <returns></returns>
+        /// <returns>ValueModel as Json file</returns>
         [HttpGet]
         public async Task<JsonResult> GetValuesFromLastNDaysAsJsonAsync(string deviceId = "08d574a4-c36e-48de-8a70-7ba08d80a2ed", Enums.SensorTypes sensorType = Enums.SensorTypes.Dissolved_Oxygen, int days = 7)
         {
