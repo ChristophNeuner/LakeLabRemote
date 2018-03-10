@@ -16,20 +16,22 @@
 <br />
 <br />
 
-@if (Model.CurrentDeviceEntities.Count == 0)
+@if (Model.Items.Count == 0)
 {
     <h3>Keine Geräte vorhanden.</h3>
 }
 else
 {
-    @foreach (Device device in Model.CurrentDeviceEntities)
+    @foreach (var item in Model.Items)
     {
-        <table class="table table-condensed table-bordered">
-            <tr><th>@device?.Name</th><th>@device?.Lake</th><th>@device?.Location</th><th>@device?.Depth</th></tr>
-        </table>
-        <div class="graph-wrapper">
-            <div class="graph-do graph"></div>
-            <div class="graph-temp graph"></div>
+        <div class="device-wrapper" data-devicId="@item?.LatestDeviceEntity.Id">
+            <table class="table table-condensed table-bordered">
+                <tr><th>@item?.LatestDeviceEntity.Name</th><th>@item?.LatestDeviceEntity.Lake</th><th>@item?.LatestDeviceEntity.Location</th><th>@item?.LatestDeviceEntity.Depth</th></tr>
+            </table>
+            <div class="graph-wrapper">
+                <div class="graph-do graph"></div>
+                <div class="graph-temp graph"></div>
+            </div>
         </div>
     }
 }
@@ -51,3 +53,6 @@ else
             }
         }
     </table>*@
+
+
+

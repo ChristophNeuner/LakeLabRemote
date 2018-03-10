@@ -6,6 +6,7 @@ using LakeLabRemote.DataSourceAPI;
 using LakeLabRemote.Models.ViewModels;
 using LakeLabRemote.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace LakeLabRemote.Controllers
 {
@@ -27,7 +28,7 @@ namespace LakeLabRemote.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(new HomeIndexViewModel(await _deviceStorage.GetCurrentUsersDevicesAsync(await _userManager.GetUserAsync(HttpContext.User))));
+            return View(new HomeIndexViewModel(await _deviceStorage.GetAllDeviceEntitiesForUserAsDictionaryAsync(await _userManager.GetUserAsync(HttpContext.User))));
         }
 
         public IActionResult Error()

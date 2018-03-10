@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 using System.Linq;
+using LakeLabRemote.DataSourceAPI;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,13 +23,15 @@ namespace LakeLabRemote.Controllers
         private IPasswordValidator<AppUser> _passwordValidator;
         private IPasswordHasher<AppUser> _passwordHasher;
         private LakeLabDbContext _dbContext;
-        public AdminController(UserManager<AppUser> usrMgr, IUserValidator<AppUser> userValid, IPasswordValidator<AppUser> passValid, IPasswordHasher<AppUser> passwordHash, LakeLabDbContext dbContext)
+        private DeviceStorage _deviceStorage;
+        public AdminController(UserManager<AppUser> usrMgr, IUserValidator<AppUser> userValid, IPasswordValidator<AppUser> passValid, IPasswordHasher<AppUser> passwordHash, LakeLabDbContext dbContext, DeviceStorage deviceStorage)
         {
             _userManager = usrMgr;
             _userValidator = userValid;
             _passwordValidator = passValid;
             _passwordHasher = passwordHash;
             _dbContext = dbContext;
+            _deviceStorage = deviceStorage;
         }
 
         public async Task<ViewResult> Index()
@@ -36,7 +39,7 @@ namespace LakeLabRemote.Controllers
             List<AppUserViewModel> appUserViewModels = new List<AppUserViewModel>();
             foreach(AppUser user in _userManager.Users)
             {
-                appUserViewModels.Add(new AppUserViewModel(user, await LakeLabContextExtension.QueryAppUserDeviceAssociationAsync(_dbContext, user.Id)));
+                appUserViewModels.Add(new AppUserViewModel(user, await _deviceStorage.GetAllDeviceEntitiesForUserAsUnsortedListAsync(user)));
             }
 
             return View(appUserViewModels);
@@ -166,7 +169,7 @@ namespace LakeLabRemote.Controllers
             List<Device> notAccessibleDevices = new List<Device>();
             foreach (Device device in _dbContext.Devices)
             {
-                List<Device> list = await LakeLabContextExtension.IsDeviceAccessibleForUserAsync(_dbContext, user, device) ? accessibleDevices : notAccessibleDevices;
+                List<Device> list = await _deviceStorage.IsDeviceAccessibleForUserAsync(user, device) ? accessibleDevices : notAccessibleDevices;
                 list.Add(device);
             }
 

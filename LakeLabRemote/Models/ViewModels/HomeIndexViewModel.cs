@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LakeLabRemote.Models;
+using MoreLinq;
 
 namespace LakeLabRemote.Models.ViewModels
 {
@@ -12,18 +13,42 @@ namespace LakeLabRemote.Models.ViewModels
     /// </summary>
     public class HomeIndexViewModel
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="current">List with dictionaries: key == DeviceName, value: latest entity of that device</param>
-        /// <param name="old">key: DeviceName, value: all old entities of that device</param>
-        public HomeIndexViewModel(List<Device> current/*, List<Dictionary<string, List<Device>>> old*/)
+        public HomeIndexViewModel(List<HomeIndexViewModelItem> items)
         {
-            CurrentDeviceEntities = current;
-            //OldDeviceEntities = old;
+            Items = items;
         }
 
-        public List<Device> CurrentDeviceEntities { get; set; }
-        //public List<Dictionary<string, List<Device>>> OldDeviceEntities { get; set; }
+        /// <summary>
+        /// Creates a HomeIndexViewModel from a Dictionary<string, List<Device>> devicesDicitionary.
+        /// </summary>
+        /// <param name="devicesDicitionary">Key: deviceName, Value: List of devices with that name</param>
+        public HomeIndexViewModel(Dictionary<string, List<Device>> devicesDicitionary)
+        {
+            List<HomeIndexViewModelItem> items = new List<HomeIndexViewModelItem>();
+            foreach(var elem in devicesDicitionary)
+            {
+                Device latestDevice = elem.Value.MaxBy(p => p.TimeOfCreation);
+                List<Device> oldDeviceEntities = elem.Value;
+                oldDeviceEntities.Remove(latestDevice);
+
+                items.Add(new HomeIndexViewModelItem(latestDevice, oldDeviceEntities));
+            }
+
+            Items = items;
+        }
+
+        public List<HomeIndexViewModelItem> Items { get; }
+    }
+
+    public class HomeIndexViewModelItem
+    {
+        public HomeIndexViewModelItem(Device latestDeviceEntity, List<Device> oldDeviceEntities)
+        {
+            LatestDeviceEntity = latestDeviceEntity;
+            OldDeviceEntities = oldDeviceEntities;
+        }
+
+        public Device LatestDeviceEntity { get; }
+        public List<Device> OldDeviceEntities { get; }
     }
 }

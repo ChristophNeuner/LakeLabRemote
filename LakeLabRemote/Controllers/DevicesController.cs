@@ -96,7 +96,7 @@ namespace LakeLabRemote.Controllers
             List<AppUserDevice> newAppUserAssociations = new List<AppUserDevice>();
             foreach(AppUser user in _identityDbContext.Users)
             {
-                if(await LakeLabContextExtension.IsDeviceAccessibleForUserAsync(_dbContext, user, device))
+                if(await _deviceStorage.IsDeviceAccessibleForUserAsync(user, device))
                 {
                     newAppUserAssociations.Add(new AppUserDevice(user.Id, newDevice.Id));
                 }
