@@ -24,7 +24,7 @@ else
 {
     @foreach (var item in Model.Items)
     {
-        <div class="device-wrapper" data-devicId="@item?.LatestDeviceEntity.Id">
+        <div class="device-wrapper" data-device_id="@item?.LatestDeviceEntity.Id" data-device_name="@item?.LatestDeviceEntity.Name">
             <table class="table table-condensed table-bordered">
                 <tr><th>@item?.LatestDeviceEntity.Name</th><th>@item?.LatestDeviceEntity.Lake</th><th>@item?.LatestDeviceEntity.Location</th><th>@item?.LatestDeviceEntity.Depth</th></tr>
             </table>

@@ -16,13 +16,13 @@ using LakeLabRemote.DataSourceAPI;
 namespace LakeLabRemote.Controllers
 {
     //[Authorize(Roles = "Admins")]
-    public class ValuesController : Controller
+    public class apiController : Controller
     {
         private LakeLabDbContext _dbContext;
         private ValueStorage _valueStorage;
         private DeviceStorage _deviceStorage;
 
-        public ValuesController(LakeLabDbContext context, ValueStorage vs, DeviceStorage ds)
+        public apiController(LakeLabDbContext context, ValueStorage vs, DeviceStorage ds)
         {
             _dbContext = context;
             _valueStorage = vs;
@@ -47,7 +47,7 @@ namespace LakeLabRemote.Controllers
             {
                 await _deviceStorage.SaveDeviceIpAsync(elem.DeviceName, HttpContext.Connection.RemoteIpAddress.ToString());
                 await _valueStorage.SaveValuesToDbAsync(elem);
-                result += elem.SensorType.ToString();
+                result += elem.SensorType.ToString() + " ";
             }
 
             return result;
