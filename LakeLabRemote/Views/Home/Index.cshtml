@@ -24,13 +24,15 @@ else
 {
     @foreach (var item in Model.Items)
     {
-        <div class="device-wrapper" data-device_id="@item?.LatestDeviceEntity.Id" data-device_name="@item?.LatestDeviceEntity.Name">
+        <div class="device-wrapper" data-device-id="@item?.LatestDeviceEntity.Id" data-device-name="@item?.LatestDeviceEntity.Name">
             <table class="table table-condensed table-bordered">
                 <tr><th>@item?.LatestDeviceEntity.Name</th><th>@item?.LatestDeviceEntity.Lake</th><th>@item?.LatestDeviceEntity.Location</th><th>@item?.LatestDeviceEntity.Depth</th></tr>
             </table>
+            <label>Werte der letzten x Tage:</label>
+            <input type="number" class="days-input" value="7"/>
             <div class="graph-wrapper">
-                <div class="graph-do graph"></div>
-                <div class="graph-temp graph"></div>
+                <div class="graph-do graph" data-sensor-type="0"></div>
+                <div class="graph-temp graph" data-sensor-type="1"></div>
             </div>
         </div>
     }

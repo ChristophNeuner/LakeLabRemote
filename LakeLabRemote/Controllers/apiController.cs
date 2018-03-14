@@ -62,16 +62,16 @@ namespace LakeLabRemote.Controllers
         /// <param name="days">From how many days ago unitl today you want to have the values.</param>
         /// <returns>ValueModel as Json file</returns>
         [HttpGet]
-        public async Task<JsonResult> GetValuesFromLastNDaysAsJsonAsync(string deviceId = "08d574a4-c36e-48de-8a70-7ba08d80a2ed", Enums.SensorTypes sensorType = Enums.SensorTypes.Dissolved_Oxygen, int days = 7)
+        public async Task<JsonResult> GetValuesFromLastNDaysAsJsonAsync(string deviceId = "08d574a4-c36e-48de-8a70-7ba08d80a2ed", int sensorType = (int)Enums.SensorTypes.Dissolved_Oxygen, int days = 7)
         {
-            IEnumerable<Value> values = await _dbContext.Values.Where(p => p.Device.Id.ToString() == deviceId && p.SensorType == sensorType && p.Timestamp >= DateTime.Today.AddDays(-1 * days)).ToListAsync();            
+            IEnumerable<Value> values = await _dbContext.Values.Where(p => p.Device.Id.ToString() == deviceId && (int)p.SensorType == sensorType && p.Timestamp >= DateTime.Today.AddDays(-1 * days)).ToListAsync();            
             List<ValueItemModel> valueItemModels = new List<ValueItemModel>();
             foreach (var elem in values)
             {
                 valueItemModels.Add(new ValueItemModel(elem.Timestamp, elem.Data));
             }
             Device device = await _dbContext.QueryDevicesAsync(new Guid(deviceId));
-            ValueModel valueModel = new ValueModel(device.Name, sensorType);
+            ValueModel valueModel = new ValueModel(device.Name, (Enums.SensorTypes)sensorType);
             valueModel.Items.AddRange(valueItemModels);
 
             return Json(valueModel);
