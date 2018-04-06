@@ -62,24 +62,31 @@ namespace LakeLabRemote.Controllers
         /// <param name="days">From how many days ago unitl today you want to have the values.</param>
         /// <returns>ValueModel as Json file</returns>
         [HttpGet]
-        public async Task<JsonResult> GetValuesFromLastNDaysAsJsonAsync(string deviceId = "08d574a4-c36e-48de-8a70-7ba08d80a2ed", int sensorType = (int)Enums.SensorTypes.Dissolved_Oxygen, int days = 7)
+        public async Task<JsonResult> GetValuesFromLastNDaysAsJsonAsync(string deviceId, int sensorType = (int)Enums.SensorTypes.Dissolved_Oxygen, int days = 7)
         {
             IEnumerable<Value> values = await _dbContext.Values.Where(p => p.Device.Id.ToString() == deviceId && (int)p.SensorType == sensorType && p.Timestamp >= DateTime.Today.AddDays(-1 * days)).ToListAsync();            
-            List<ValueItemModel> valueItemModels = new List<ValueItemModel>();
+            List<PlotItemModel> plotItemModels = new List<PlotItemModel>();
             foreach (var elem in values)
             {
-                valueItemModels.Add(new ValueItemModel(elem.Timestamp, elem.Data));
+                plotItemModels.Add(new PlotItemModel(GetJavascriptTimestamp(elem.Timestamp), elem.Data));
             }
             Device device = await _dbContext.QueryDevicesAsync(new Guid(deviceId));
-            ValueModel valueModel = new ValueModel(device.Name, (Enums.SensorTypes)sensorType);
-            valueModel.Items.AddRange(valueItemModels);
+            PlotModel plotModel = new PlotModel(device.Name, (Enums.SensorTypes)sensorType);
+            plotModel.Items.AddRange(plotItemModels);
 
-            return Json(valueModel);
+            return Json(plotModel);
         }
 
         public async Task<JsonResult> GetValuesBetweenTwoDatesAsJsonAsync(string deviceId, Enums.SensorTypes sensorType, DateTime start, DateTime end)
         {
             throw new NotImplementedException();
+        }
+
+        public static long GetJavascriptTimestamp(DateTime input)
+        {
+            System.TimeSpan span = new System.TimeSpan(System.DateTime.Parse("1/1/1970").Ticks);
+            System.DateTime time = input.Subtract(span);
+            return (long)(time.Ticks / 10000);
         }
     }
 }

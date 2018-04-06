@@ -3,16 +3,16 @@ using System;
 
 namespace LakeLabLib
 {
-    public class ValueItemModel
+    public class PlotItemModel
     {
-        public ValueItemModel(DateTime timestamp, float data)
+        public PlotItemModel(long timestamp, float data)
         {
             Timestamp = timestamp;
             Data = data;
         }
 
         [JsonProperty("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public long Timestamp { get; set; }
 
         [JsonProperty("data")]
         public float Data { get; set; }

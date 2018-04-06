@@ -8,13 +8,13 @@ namespace LakeLabPiApp
 {
     class Program
     {
-        private static string uri = "http://localhost:50992/api/ReceiveValues";
-        private static string databasePathDO = @"D:\DO.sqlite";
-        private static string databasePathTemp = @"D:\RTD.sqlite";
+        //private static string uri = "http://localhost:50992/api/ReceiveValues";
+        //private static string databasePathDO = @"D:\DO.sqlite";
+        //private static string databasePathTemp = @"D:\RTD.sqlite";
 
-        //private static string uri = "http://212.227.175.108/api/ReceiveValues";
-        //private static string databasePathDO = @"/home/pi/iniac/data/DO.sqlite";
-        //private static string databasePathTemp = @"/home/pi/iniac/data/RTD.sqlite";
+        private static string uri = "http://212.227.175.108/api/ReceiveValues";
+        private static string databasePathDO = @"/home/pi/iniac/data/DO.sqlite";
+        private static string databasePathTemp = @"/home/pi/iniac/data/RTD.sqlite";
 
         private static string deviceName = "pi1";
 
@@ -37,7 +37,7 @@ namespace LakeLabPiApp
 
                 string response = await httphelper.PostDataAsync(uri, valueModels);
                 Console.WriteLine(response);
-                System.Threading.Thread.Sleep(60000);
+                System.Threading.Thread.Sleep(60*15*1000);
             }
         }
     }

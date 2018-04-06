@@ -4,16 +4,7 @@
 
 @model HomeIndexViewModel
 
-
-<div id="placeholder" style="width:600px;height:300px"></div>
-
-<br />
-<br />
-
 <a asp-action="DeleteAllValues" class="btn btn-primary btn-danger">Alle Werte löschen</a>
-
-<br />
-<br />
 <br />
 
 @if (Model.Items.Count == 0)
@@ -24,37 +15,24 @@ else
 {
     @foreach (var item in Model.Items)
     {
-        <div class="device-wrapper" data-device-id="@item?.LatestDeviceEntity.Id" data-device-name="@item?.LatestDeviceEntity.Name">
-            <table class="table table-condensed table-bordered">
-                <tr><th>@item?.LatestDeviceEntity.Name</th><th>@item?.LatestDeviceEntity.Lake</th><th>@item?.LatestDeviceEntity.Location</th><th>@item?.LatestDeviceEntity.Depth</th></tr>
-            </table>
-            <label>Werte der letzten x Tage:</label>
-            <input type="number" class="days-input" value="7"/>
-            <div class="graph-wrapper">
-                <div class="graph-do graph" data-sensor-type="0"></div>
-                <div class="graph-temp graph" data-sensor-type="1"></div>
-            </div>
+    <div class="device-wrapper" data-device-id="@item?.LatestDeviceEntity.Id" data-device-name="@item?.LatestDeviceEntity.Name">
+        <table class="table table-condensed table-bordered">
+            <tr><th>@item?.LatestDeviceEntity.Name</th><th>@item?.LatestDeviceEntity.Lake</th><th>@item?.LatestDeviceEntity.Location</th><th>@item?.LatestDeviceEntity.Depth</th></tr>
+        </table>
+        <label>Werte der letzten </label>
+        <input type="number" class="days-input" value="7" />
+        <label> Tage</label>
+        @* Later the information about the types of sensors a device has should be stored in the device class and for each sensor a graph should be plotted,
+            for now we go with that fixed solution, because there is only one pi*@
+        <div class="graph-wrapper">
+            <div>Sauerstoffgehalt in mg/L</div>
+            <div class="graph-do graph" data-sensor-type="0"></div>
+            <div>Temperatur in °C</div>
+            <div class="graph-temp graph" data-sensor-type="1"></div>
         </div>
+    </div>
     }
 }
-
-
-
-@*<div class="panel-body bg-primary"><h4>Werte</h4></div>
-    <table class="table table-condensed table-bordered">
-        <tr><th>Zeit</th><th>Ort</th><th>Tiefe</th><th>O2-Gehalt (mg/l)</th><th>Temperatur</th></tr>
-        @if (Model.Count() == 0)
-        {
-            <tr><td colspan="5" class="text-center">Keine Werte vorhanden.</td></tr>
-        }
-        else
-        {
-            @foreach (Value value in Model)
-            {
-                <tr><td>@value?.Timestamp</td><td>@value?.Device?.Location</td><td>@value?.Device?.Depth</td><td>@value?.Data</td></tr>
-            }
-        }
-    </table>*@
 
 
 
