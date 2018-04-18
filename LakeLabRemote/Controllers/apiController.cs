@@ -84,9 +84,9 @@ namespace LakeLabRemote.Controllers
 
         public static long GetJavascriptTimestamp(DateTime input)
         {
-            System.TimeSpan span = new System.TimeSpan(System.DateTime.Parse("1/1/1970").Ticks);
-            System.DateTime time = input.Subtract(span);
-            return (long)(time.Ticks / 10000);
+            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
+            DateTime time = input.Subtract(span);
+            return time.Ticks/10000;
         }
     }
 }

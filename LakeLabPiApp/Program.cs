@@ -10,18 +10,13 @@ namespace LakeLabPiApp
 {
     class Program
     {
-        Json
+        Parameters parameters = LoadJson()
+        
 
-
-        //private static string _uri = "http://localhost:50992/api/ReceiveValues";
-        //private static string _databasePathDO = @"D:\DO.sqlite";
-        //private static string _databasePathTemp = @"D:\RTD.sqlite";
-               
-        private static string _uri = "http://212.227.175.108/api/ReceiveValues";
-        private static string _databasePathDO = @"/home/pi/iniac/data/DO.sqlite";
-        private static string _databasePathTemp = @"/home/pi/iniac/data/RTD.sqlite";
-
-        private static string _deviceName = "pi1";
+        private static string _uri = 
+        private static string _databasePathDO = 
+        private static string _databasePathTemp = 
+        private static string _deviceName = 
 
         private static SQLiteDbReader _dbreader = new SQLiteDbReader();
         private static HttpHelper _httphelper = new HttpHelper();
@@ -46,18 +41,31 @@ namespace LakeLabPiApp
             }
         }
 
-        public void LoadJson()
+        private static async Task<Parameters> LoadJson(string path)
         {
-            using (StreamReader r = new StreamReader(".//parameters.json"))
+            Parameters parameters = new Parameters();
+            using (StreamReader r = new StreamReader(path))
             {
-                string json = r.ReadToEnd();
-                List<Parameters> parameters = JsonConvert.DeserializeObject<List<Parameters>>(json);
+                string json = await r.ReadToEndAsync();
+                parameters = JsonConvert.DeserializeObject<Parameters>(json);
             }
+
+            return parameters;
         }
     }
 
     public class Parameters
     {
-        public string
+        [JsonProperty("uri")]
+        public string Uri { get; set; }
+
+        [JsonProperty("databasePathDO")]
+        public string DatabasePathDO { get; set; }
+
+        [JsonProperty("databasePathTemp")]
+        public string DatabasePathTemp { get; set; }
+
+        [JsonProperty("deviceName")]
+        public string DeviceName { get; set; }
     }
 }
