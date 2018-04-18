@@ -1,0 +1,13 @@
+﻿{
+  //"uri": "http://localhost:50992/api/ReceiveValues",
+  //"databasePathDO": "D:\\DO.sqlite",
+  //"databasePathTemp": "D:\\RTD.sqlite",
+
+
+  "uri": "http://212.227.175.108/api/ReceiveValues",
+  "databasePathDO": "//home//pi//iniac//data//DO.sqlite",
+  "databasePathTemp": "//home//pi//iniac//data//RTD.sqlite",
+
+
+  "deviceName": "pi1"
+}
