@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LakeLabRemote", "LakeLabRem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LakeLabPiApp", "LakeLabPiApp\LakeLabPiApp.csproj", "{10A8895C-5906-45F8-9D19-81BA2B274689}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LakeLabLib", "LakeLabModelsLib\LakeLabLib.csproj", "{AF02ADD0-41EC-4272-81F2-0654E33E1B54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LakeLabLib", "LakeLabModelsLib\LakeLabLib.csproj", "{AF02ADD0-41EC-4272-81F2-0654E33E1B54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

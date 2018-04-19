@@ -1,6 +1,10 @@
 ﻿{
+  //"uri": "http://127.0.0.1/api/ReceiveValues",
   "uri": "http://212.227.175.108/api/ReceiveValues",
-  "databasePathDO": "//home//pi//iniac//data//DO.sqlite",
-  "databasePathTemp": "//home//pi//iniac//data//RTD.sqlite",
-  "deviceName": "pi1"
+  "databasePathDOWindows": "D:\\DO.sqlite",
+  "databasePathTempWindows": "D:\\RTD.sqlite",
+  "databasePathDOLinux": "//home//pi//iniac//data//DO.sqlite",
+  "databasePathTempLinux": "//home//pi//iniac//data//RTD.sqlite",
+  "deviceName": "pi1",
+  "sleepTime": "30000"
 }
