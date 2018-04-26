@@ -52,6 +52,7 @@ namespace LakeLabRemote.Controllers
             return View(details);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

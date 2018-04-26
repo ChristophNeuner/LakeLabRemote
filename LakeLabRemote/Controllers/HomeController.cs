@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace LakeLabRemote.Controllers
 {
-    [Authorize(Roles = "Admins")]
+    [Authorize(Roles = "Admins, Users")]
     public class HomeController : Controller
     {
         private LakeLabDbContext _dbContext;
@@ -25,7 +25,7 @@ namespace LakeLabRemote.Controllers
             _deviceStorage = ds;
             _userManager = um;
         }
-
+      
         public async Task<IActionResult> Index()
         {
             return View(new HomeIndexViewModel(await _deviceStorage.GetAllDeviceEntitiesForUserAsDictionaryAsync(await _userManager.GetUserAsync(HttpContext.User))));
@@ -36,6 +36,7 @@ namespace LakeLabRemote.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admins")]
         public async Task<IActionResult> DeleteAllValues()
         {
             await _valueStorage.DeleteAllValuesAsync();
