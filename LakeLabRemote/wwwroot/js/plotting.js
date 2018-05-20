@@ -3,13 +3,19 @@
     //$.plot($("#placeholder"), [ d3 ]);
     //$.plot("#placeholder", [[[0, 0], [1, 1]]]);
     //$.plot($("#placeholder"), [[[0, 0], [1, 1]]], { yaxis: { max: 1 } });
-   
-    var wrappers = getAllDeviceWrappers();   
+    $("#index-refresh").click(function () {
+        main();
+    });
+    main();
+});
+
+
+function main() {
+    var wrappers = getAllDeviceWrappers();
     wrappers.forEach(function (elem) {
         getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(elem);
     });
-});
-
+}
 
 //gets all elements where class="device-wrapper" and maps them into a list of DeviceWrapper objects
 function getAllDeviceWrappers()
@@ -55,7 +61,8 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
                             values.push(valuePair);
                             n++;
                         });
-                        $.plot($(deviceWrapper.htmlElementRef).find(".graph-do"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.%y %H:%M" } });
+                        //$.plot($(deviceWrapper.htmlElementRef).find(".graph-do"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.%y %H:%M" } });
+                        $.plot($(deviceWrapper.htmlElementRef).find(".graph-do"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.\n%H:%M" } });
                     }
                 });
                 break;
@@ -74,7 +81,8 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
                             values.push(valuePair);
                             n++;
                         });
-                        $.plot($(deviceWrapper.htmlElementRef).find(".graph-temp"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.%y %H:%M" } });
+                        //$.plot($(deviceWrapper.htmlElementRef).find(".graph-temp"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.%y %H:%M" } });
+                        $.plot($(deviceWrapper.htmlElementRef).find(".graph-temp"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.\n%H:%M" } });
                     }
                 });
                 break;
