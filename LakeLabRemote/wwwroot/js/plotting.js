@@ -3,7 +3,10 @@
     //$.plot($("#placeholder"), [ d3 ]);
     //$.plot("#placeholder", [[[0, 0], [1, 1]]]);
     //$.plot($("#placeholder"), [[[0, 0], [1, 1]]], { yaxis: { max: 1 } });
-    $("#index-refresh").click(function () {
+    //$("#index-refresh").click(function () {
+    //    main();
+    //});
+    $("#numberOfDaysInput").on('input', function () {
         main();
     });
     main();
