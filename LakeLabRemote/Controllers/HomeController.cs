@@ -36,11 +36,11 @@ namespace LakeLabRemote.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admins")]
-        public async Task<IActionResult> DeleteAllValues()
-        {
-            await _valueStorage.DeleteAllValuesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        //[Authorize(Roles = "Admins")]
+        //public async Task<IActionResult> DeleteAllValues()
+        //{
+        //    await _valueStorage.DeleteAllValuesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
     }
 }

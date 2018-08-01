@@ -41,7 +41,7 @@ namespace LakeLabRemote.DataSourceAPI
             Device device;
             if (deviceList.Count() == 0)
             {
-                device = new Device(model.DeviceName, "not defined", "not defined", "not defined");
+                device = new Device(model.DeviceName, "not defined", "not defined", Enums.Depth.NotDefined);
                 await _deviceStorage.SaveNewDeviceToDbAsync(device);
             }
             else

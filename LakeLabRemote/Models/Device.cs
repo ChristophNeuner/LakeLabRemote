@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using static LakeLabLib.Enums;
 
 namespace LakeLabRemote.Models
 {
@@ -12,7 +8,7 @@ namespace LakeLabRemote.Models
     {
         public Device() { }
 
-        public Device(string name, string lake, string location, string depth)
+        public Device(string name, string lake, string location, Depth depth)
         {
             if (string.IsNullOrEmpty(nameof(name)))
                 throw new NullReferenceException("Name must not be null or empty.");
@@ -36,7 +32,7 @@ namespace LakeLabRemote.Models
         public string Name { get; set; }
         public string Lake { get; set; }
         public string Location { get; set; }
-        public string Depth { get; set; }
+        public Depth Depth { get; set; }
         public DateTime TimeOfCreation { get; set; }
         public string Ip { get; set; }
         

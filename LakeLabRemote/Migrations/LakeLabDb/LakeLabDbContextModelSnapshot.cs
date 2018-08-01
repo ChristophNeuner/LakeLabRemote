@@ -40,7 +40,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Depth");
+                    b.Property<int>("Depth");
 
                     b.Property<string>("Ip");
 

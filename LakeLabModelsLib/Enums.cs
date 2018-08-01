@@ -11,5 +11,13 @@ namespace LakeLabLib
             Dissolved_Oxygen,
             Temperature
         };
+
+        public enum Depth
+        {
+            Oberfläche,
+            Mitte,
+            Grund,
+            NotDefined
+        }
     }
 }

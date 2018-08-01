@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
-    public partial class LakeLabDb : Migration
+    public partial class LakeLabDb1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Depth = table.Column<string>(type: "longtext", nullable: true),
+                    Depth = table.Column<int>(type: "int", nullable: false),
                     Ip = table.Column<string>(type: "longtext", nullable: true),
                     Lake = table.Column<string>(type: "longtext", nullable: true),
                     Location = table.Column<string>(type: "longtext", nullable: true),
@@ -44,6 +44,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                 {
                     Guid = table.Column<Guid>(type: "char(36)", nullable: false),
                     Data = table.Column<float>(type: "float", nullable: false),
+                    DataUnit = table.Column<string>(type: "longtext", nullable: true),
                     DeviceId = table.Column<Guid>(type: "char(36)", nullable: true),
                     SensorType = table.Column<int>(type: "int", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false)

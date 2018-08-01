@@ -12,8 +12,8 @@ using System;
 namespace LakeLabRemote.Migrations.LakeLabDb
 {
     [DbContext(typeof(LakeLabDbContext))]
-    [Migration("20180215184110_LakeLabDb")]
-    partial class LakeLabDb
+    [Migration("20180801191046_LakeLabDb1")]
+    partial class LakeLabDb1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Depth");
+                    b.Property<int>("Depth");
 
                     b.Property<string>("Ip");
 
@@ -64,6 +64,8 @@ namespace LakeLabRemote.Migrations.LakeLabDb
                         .ValueGeneratedOnAdd();
 
                     b.Property<float>("Data");
+
+                    b.Property<string>("DataUnit");
 
                     b.Property<Guid?>("DeviceId");
 
