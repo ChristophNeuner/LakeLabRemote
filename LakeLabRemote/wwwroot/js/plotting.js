@@ -52,8 +52,9 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
             case 0:
                 $.ajax({
                     //url: "http://localhost:50992/api/GetValuesFromLastNDaysAsJsonAsync",
-                    url: "http://212.227.175.108/api/GetValuesFromLastNDaysAsJsonAsync",
+                    url: "https://212.227.175.108/api/GetValuesFromLastNDaysAsJsonAsync",
                     data: { deviceId: deviceWrapper.deviceId, sensorType: sensorType, days: deviceWrapper.days },
+                    type: 'GET',
                     dataType: "json",
                     success: function (data) {
                         console.log(data.items[0]);
@@ -72,8 +73,9 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
             case 1:
                 $.ajax({
                     //url: "http://localhost:50992/api/GetValuesFromLastNDaysAsJsonAsync",
-                    url: "http://212.227.175.108/api/GetValuesFromLastNDaysAsJsonAsync",
+                    url: "https://212.227.175.108/api/GetValuesFromLastNDaysAsJsonAsync",
                     data: { deviceId: deviceWrapper.deviceId, sensorType: sensorType, days: deviceWrapper.days },
+                    type: 'GET',
                     dataType: "json",
                     success: function (data) {
                         console.log(data.items[0]);

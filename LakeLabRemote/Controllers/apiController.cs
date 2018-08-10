@@ -73,7 +73,6 @@ namespace LakeLabRemote.Controllers
             Device device = await _dbContext.QueryDevicesAsync(new Guid(deviceId));
             PlotModel plotModel = new PlotModel(device.Name, (Enums.SensorTypes)sensorType);
             plotModel.Items.AddRange(plotItemModels);
-
             return Json(plotModel);
         }
 
