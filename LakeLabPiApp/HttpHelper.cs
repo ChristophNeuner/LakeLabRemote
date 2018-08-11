@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Security.Authentication;
 
 namespace LakeLabPiApp
 {
@@ -12,16 +13,25 @@ namespace LakeLabPiApp
     {
         public async Task<string> PostDataAsync(string uri, List<ValueModel> valueModels)
         {
-            string json = JsonConvert.SerializeObject(valueModels);
-            HttpClient client = new HttpClient();
-            try
+            using (var handler = new HttpClientHandler())
             {
-                return await client.PostAsync(uri, new StringContent(json, Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync();
-            }
-            catch(Exception e)
-            {
-                return e.Message;
-            }
+                handler.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls;
+                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+
+                string json = JsonConvert.SerializeObject(valueModels);
+
+                using (var client = new HttpClient(handler))
+                {
+                    try
+                    {
+                        return await client.PostAsync(uri, new StringContent(json, Encoding.UTF8, "application/json")).Result.Content.ReadAsStringAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        return e.Message;
+                    }
+                }
+            }           
         }
     }
 }
