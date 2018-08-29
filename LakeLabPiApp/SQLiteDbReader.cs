@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using LakeLabLib;
-using SQLitePCL;
 
 namespace LakeLabPiApp
 {

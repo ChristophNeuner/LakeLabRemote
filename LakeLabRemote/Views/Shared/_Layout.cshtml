@@ -1,42 +1,58 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Christoph Neuner" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />*@
     <link rel="stylesheet" asp-href-include="~/css/*.css" />
 </head>
 <body>
-    <a class="btn navbar-btn" asp-controller="Home" asp-action="Index">Home</a>
-    <a class="btn navbar-btn" asp-controller="Admin" asp-action="Index">Admin</a>
-    <a class="btn navbar-btn" asp-controller="RoleAdmin" asp-action="Index">RoleAdmin</a>
-    <a class="btn navbar-btn" asp-controller="Devices" asp-action="Index">Devices</a>
-    @if (!User?.Identity?.IsAuthenticated ?? false)
-    {
-        <a class="btn navbar-btn" asp-controller="Account" asp-action="Login">Login</a>
-    }
-    @if (User?.Identity?.IsAuthenticated ?? false)
-    {
-        <a class="btn navbar-btn" asp-controller="Account" asp-action="Logout">Logout</a>
-    }
-    <div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Home</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>
+                    <li><a asp-area="" asp-controller="RoleAdmin" asp-action="Index">RoleAdmin</a></li>
+                    <li><a asp-area="" asp-controller="Devices" asp-action="Index">Devices</a></li>
+                    @if (!User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                    }
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
         @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Christoph Neuner</p>
+        </footer>
     </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous" type="text/javascript" charset="utf-8">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>*@
+    <script asp-src-include="~/lib/flot/*.js"></script>
+    <script asp-src-include="~/js/*.js"></script>
 </body>
 </html>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous" type="text/javascript" charset="utf-8">
-</script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>*@
-
-<script asp-src-include="~/lib/flot/*.js"></script>
-<script asp-src-include="~/js/*.js"></script>
 
 
