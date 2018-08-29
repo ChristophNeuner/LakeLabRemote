@@ -50,7 +50,8 @@ namespace LakeLabRemote.Controllers
                 result += elem.SensorType.ToString() + " ";
             }
 
-            return result;
+            return "success";
+            //return result;
             //return $"device-name: {model.DeviceName}{Environment.NewLine}sensor-type: {model.SensorType}{Environment.NewLine}{model.Items.Select(p => $"{p.Timestamp}: {p.Data}").Aggregate((e, c) => e + Environment.NewLine + c)}";
         }
 

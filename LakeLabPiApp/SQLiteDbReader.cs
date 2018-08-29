@@ -43,5 +43,29 @@ namespace LakeLabPiApp
             }
             return items;
         }
+
+        private bool CheckIfColumnExists(string databasePath, string tableName, string columnName)
+        {
+            using (var conn = new SqliteConnection("" + new SqliteConnectionStringBuilder { DataSource = databasePath }))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = string.Format("PRAGMA table_info({0})", tableName);
+
+                var reader = cmd.ExecuteReader();
+                int nameIndex = reader.GetOrdinal("Name");
+                while (reader.Read())
+                {
+                    if (reader.GetString(nameIndex).Equals(columnName))
+                    {
+                        conn.Close();
+                        return true;
+                    }
+                }
+                conn.Close();
+            }
+            return false;
+        }
+
     }
 }
