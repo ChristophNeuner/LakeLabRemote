@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "User Access Logging";
+}
+
+@model List<UserRequest>
+
+<div class="panel-body">
+    <div class="table-responsive">
+        <table class="table table-bordered table-condensed logging-table">
+            <thead>
+                <tr><th>Timestamp</th><th>Username</th></tr>
+            </thead>
+            <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr><td>@r?.Timestamp</td><td>@r?.Username</td></tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>

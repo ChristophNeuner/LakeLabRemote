@@ -10,12 +10,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Threading.Tasks;
 using LakeLabRemote.DataSourceAPI;
+using LakeLabRemote.Middlewares;
 
 namespace LakeLabRemote
 {
     public class Startup
     {
-        IConfigurationRoot Configuration;
+        readonly IConfigurationRoot Configuration;
 
         public Startup(IHostingEnvironment env)
         {
@@ -38,6 +39,7 @@ namespace LakeLabRemote
             }).AddEntityFrameworkStores<AppIdentityDbContext>();
             services.AddDbContext<LakeLabDbContext>(options => options.UseMySql(connectionString));
             //services.AddDbContext<LakeLabDbContext>(options => options.UseInMemoryDatabase("inMemoryDb"));
+            services.AddDbContext<LoggingDbContext>(options => options.UseMySql(connectionString));
 
             services.AddMvc();
             services.AddMemoryCache();
@@ -46,6 +48,7 @@ namespace LakeLabRemote
 
             services.AddTransient<ValueStorage>();
             services.AddTransient<DeviceStorage>();
+            services.AddScoped<LoggingDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +73,7 @@ namespace LakeLabRemote
             app.UseStaticFiles();
             app.UseSession();
             app.UseAuthentication();
+            app.UseMiddleware<UserRequestLoggingMiddleware>();
             app.UseMvcWithDefaultRoute();
 
             AppIdentityDbContext.CreateAdminAccount(app.ApplicationServices, Configuration).Wait();
