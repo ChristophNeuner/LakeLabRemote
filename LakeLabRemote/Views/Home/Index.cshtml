@@ -20,7 +20,7 @@ else
             <tr><th>@item?.LatestDeviceEntity.Name</th><th>@item?.LatestDeviceEntity.Lake</th><th>@item?.LatestDeviceEntity.Location</th><th>@item?.LatestDeviceEntity.Depth</th></tr>
         </table>
         <label>Werte der letzten </label>
-        <input id="numberOfDaysInput" type="number" class="days-input" value="0" />
+        <input id="numberOfDaysInput" type="number" class="days-input" value="0" min="0"/>
         <label> Tage</label>
         @*<a id="index-refresh" href="#" class="btn btn-info btn-lg">
             <span class="glyphicon glyphicon-refresh"></span> Refresh
