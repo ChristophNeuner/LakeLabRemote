@@ -57,7 +57,6 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
                     type: 'GET',
                     dataType: "json",
                     success: function (data) {
-                        console.log(data.items[0]);
                         var values = [];
                         var n = 1;
                         data.items.forEach(function (item) {
@@ -78,7 +77,6 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
                     type: 'GET',
                     dataType: "json",
                     success: function (data) {
-                        console.log(data.items[0]);
                         var values = [];
                         var n = 1;
                         data.items.forEach(function (item) {

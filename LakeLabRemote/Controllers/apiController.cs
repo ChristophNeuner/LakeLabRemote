@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MoreLinq;
 using Microsoft.AspNetCore.Authorization;
 using LakeLabRemote.DataSourceAPI;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,10 +22,12 @@ namespace LakeLabRemote.Controllers
         private LakeLabDbContext _dbContext;
         private ValueStorage _valueStorage;
         private DeviceStorage _deviceStorage;
+        private LoggingDbContext _loggingDbContext;
 
-        public apiController(LakeLabDbContext context, ValueStorage vs, DeviceStorage ds)
+        public apiController(LakeLabDbContext context, LoggingDbContext logginContext, ValueStorage vs, DeviceStorage ds)
         {
             _dbContext = context;
+            _loggingDbContext = logginContext;
             _valueStorage = vs;
             _deviceStorage = ds;
         }
@@ -65,7 +68,7 @@ namespace LakeLabRemote.Controllers
         [HttpGet]
         public async Task<JsonResult> GetValuesFromLastNDaysAsJsonAsync(string deviceId, int sensorType = (int)Enums.SensorTypes.Dissolved_Oxygen, int days = 7)
         {
-            IEnumerable<Value> values = await _dbContext.Values.Where(p => p.Device.Id.ToString() == deviceId && (int)p.SensorType == sensorType && p.Timestamp >= DateTime.Today.AddDays(-1 * days)).ToListAsync();            
+            IEnumerable<Value> values = await _dbContext.Values.Where(p => p.Device.Id.ToString() == deviceId && (int)p.SensorType == sensorType && p.Timestamp >= DateTime.Today.AddDays(-1 * days)).ToListAsync();
             List<PlotItemModel> plotItemModels = new List<PlotItemModel>();
             foreach (var elem in values)
             {
@@ -82,11 +85,52 @@ namespace LakeLabRemote.Controllers
             throw new NotImplementedException();
         }
 
-        public static long GetJavascriptTimestamp(DateTime input)
+        [HttpGet]
+        public async Task<JsonResult> GetUserLogsForLastNDaysAsync(int days = 0)
+        {
+            var logs = await _loggingDbContext.UserRequests.Where(p => p.Timestamp >= DateTime.Today.AddDays(-1 * days)).ToListAsync();
+            List<LogTransferItemModel> logTransferItemModels = new List<LogTransferItemModel>();
+            foreach (var elem in logs)
+            {
+                logTransferItemModels.Add(new LogTransferItemModel(elem.Timestamp, elem.Username));
+            }
+
+            LogTransferModel model = new LogTransferModel();
+            model.Items.AddRange(logTransferItemModels);
+            return Json(model);
+        }
+
+        private static long GetJavascriptTimestamp(DateTime input)
         {
             TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
             DateTime time = input.Subtract(span);
-            return time.Ticks/10000;
+            return time.Ticks / 10000;
+        }
+
+        public sealed class LogTransferModel
+        {
+            [JsonProperty("items")]
+            public List<LogTransferItemModel> Items { get; } = new List<LogTransferItemModel>();
+        }
+
+        public sealed class LogTransferItemModel
+        {
+            public LogTransferItemModel(DateTime timeStamp, string username)
+            {
+                if (username == null)
+                {
+                    throw new ArgumentNullException(nameof(username));
+                }
+
+                TimeStamp = timeStamp;
+                Username = username;
+            }
+
+            [JsonProperty("timestamp")]
+            public DateTime TimeStamp { get; set; }
+
+            [JsonProperty("username")]
+            public string Username { get; set; }
         }
     }
 }

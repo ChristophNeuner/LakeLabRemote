@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace LakeLabLib
@@ -7,6 +8,11 @@ namespace LakeLabLib
     {
         public PlotModel(string deviceName, Enums.SensorTypes sensorType)
         {
+            if (deviceName == null)
+            {
+                throw new ArgumentNullException(nameof(deviceName));
+            }
+
             DeviceName = deviceName;
             SensorType = sensorType;
         }

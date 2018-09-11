@@ -2,7 +2,10 @@
     ViewData["Title"] = "User Access Logging";
 }
 
-@model List<UserRequest>
+
+<label>Logs der letzten </label>
+<input id="numberOfDaysUserLogsInput" type="number" class="days-input" value="0" min="0" />
+<label> Tage</label>
 
 <div class="panel-body">
     <div class="table-responsive">
@@ -10,11 +13,7 @@
             <thead>
                 <tr><th>Timestamp</th><th>Username</th></tr>
             </thead>
-            <tbody>
-                    @foreach (var r in Model)
-                    {
-                        <tr><td>@r?.Timestamp</td><td>@r?.Username</td></tr>
-                    }
+            <tbody id="logs">
             </tbody>
         </table>
     </div>
