@@ -8,11 +8,11 @@
 
 function printLog() {
     $("#logs").empty();
-    var days = $(this).find(".days-input").val();
+    var daysLogs = $("#numberOfDaysUserLogsInput").val();
     $.ajax({
         //url: "http://localhost:50992/api/GetUserLogsForLastNDaysAsync",
         url: "https://212.227.175.108/api/GetUserLogsForLastNDaysAsync",
-        data: {days : days },
+        data: { days: daysLogs },
         type: 'GET',
         dataType: "json",
         success: function (data) {
