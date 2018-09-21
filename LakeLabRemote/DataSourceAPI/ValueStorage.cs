@@ -32,7 +32,7 @@ namespace LakeLabRemote.DataSourceAPI
             List<ValueItemModel> valueItemsToSave = model.Items;
             IEnumerable<Value> values = await _dbContext.QueryValuesAsync(p => p, sensorType);
             if (values.Count() != 0)
-            {
+            { //TODO: this prevents older values from different devices to be stored, check for device and time (not only for time)
                 DateTime latest = values.Select(p => p.Timestamp).Max();
                 valueItemsToSave = model.Items.Where(d => d.Timestamp > latest).ToList();
             }
