@@ -5,6 +5,5 @@
   "databasePathTempWindows": "D:\\RTD.sqlite",
   "databasePathDOLinux": "//home//pi//iniac//data//DO.sqlite",
   "databasePathTempLinux": "//home//pi//iniac//data//RTD.sqlite",
-  "deviceName": "pi1",
-  "sleepTime": "1800000"
+  "sleepTime": "5000"
 }

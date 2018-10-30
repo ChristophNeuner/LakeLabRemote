@@ -35,6 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="deviceName.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="parameters.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

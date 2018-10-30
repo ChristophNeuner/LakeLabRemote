@@ -1,0 +1,30 @@
+﻿version: "3"
+  
+networks:
+  backend:
+
+services:
+
+  webapp:
+    image: "christophneuner/wasserwerte_webapp"
+    networks:
+      - backend
+    ports: 
+      - 3000:80      
+    deploy:
+        replicas: 1
+        placement:
+            constraints:
+            - node.labels.type == webapp
+            
+#  piapp:
+#    image: "christophneuner/wasserwerte_piapp"
+#    volumes:
+#      - /home/pi/wasserwerte_dateien:/app
+#    networks:
+#      - backend
+#    deploy:
+#        mode: global
+#        placement:
+#           constraints:
+#           - node.labels.type == piapp
