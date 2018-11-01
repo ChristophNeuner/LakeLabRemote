@@ -40,7 +40,7 @@ namespace LakeLabPiApp
                         parameters = await LoadJsonAsync(".//parameters.json");
                         databasePathDO = parameters.DatabasePathDOLinux;
                         databasePathTemp = parameters.DatabasePathTempLinux;
-                        deviceNameJson = await LoadJsonDeviceNameAsync(".//deviceName.json");
+                        deviceNameJson = await LoadJsonDeviceNameAsync(parameters.DeviceNamePathLinux);
                         deviceName = deviceNameJson.Name;
                     }
                     
@@ -116,6 +116,9 @@ namespace LakeLabPiApp
             [JsonProperty("databasePathTempLinux")]
             public string DatabasePathTempLinux { get; set; }
 
+            [JsonProperty("deviceNamePathLinux")]
+            public string DeviceNamePathLinux { get; set; }
+
             [JsonProperty("sleepTime")]
             public int SleepTime { get; set; }
         }
@@ -125,6 +128,5 @@ namespace LakeLabPiApp
             [JsonProperty("deviceName")]
             public string Name { get; set; }
         }
-
     }
 }

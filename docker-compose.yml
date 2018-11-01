@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  lakelabremote:
-    image: ${DOCKER_REGISTRY}lakelabremote
-    build:
-      context: .
-      dockerfile: LakeLabRemote/Dockerfile
