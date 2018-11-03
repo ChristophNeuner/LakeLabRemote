@@ -17,7 +17,7 @@ namespace LakeLabRemote
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
-                .UseUrls("http://localhost:5002/")
+                //.UseUrls("http://localhost:5002/")
                 .Build();
 
             host.Run();

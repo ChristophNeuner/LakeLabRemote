@@ -3,8 +3,10 @@
   "uri": "https://212.227.175.108/api/ReceiveValues",
   "databasePathDOWindows": "D:\\DO.sqlite",
   "databasePathTempWindows": "D:\\RTD.sqlite",
-  "databasePathDOLinux": "//home//pi//iniac//data//DO.sqlite",
-  "databasePathTempLinux": "//home//pi//iniac//data//RTD.sqlite",
-  "deviceName": "pi1",
+  //"databasePathDOLinux": "//home//pi//iniac//data//DO.sqlite",
+  //"databasePathTempLinux": "//home//pi//iniac//data//RTD.sqlite",
+  "databasePathDOLinux": "//data//DO.sqlite",
+  "databasePathTempLinux": "//data//RTD.sqlite",
+  "deviceNamePathLinux": "//deviceName//deviceName.json",
   "sleepTime": "1800000"
 }

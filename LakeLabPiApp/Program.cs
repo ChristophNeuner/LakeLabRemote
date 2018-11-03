@@ -19,8 +19,10 @@ namespace LakeLabPiApp
             while (true)
             {
                 Parameters parameters = new Parameters();
+                DeviceName deviceNameJson = new DeviceName();
                 string databasePathDO = "";
                 string databasePathTemp = "";
+                string deviceName = "";
 
                 try
                 {
@@ -29,6 +31,8 @@ namespace LakeLabPiApp
                         parameters = await LoadJsonAsync(".\\parameters.json");
                         databasePathDO = parameters.DatabasePathDOWindows;
                         databasePathTemp = parameters.DatabasePathTempWindows;
+                        deviceNameJson = await LoadJsonDeviceNameAsync(".\\deviceName.json");
+                        deviceName = deviceNameJson.Name;
                     }
                         
                     else
@@ -36,10 +40,11 @@ namespace LakeLabPiApp
                         parameters = await LoadJsonAsync(".//parameters.json");
                         databasePathDO = parameters.DatabasePathDOLinux;
                         databasePathTemp = parameters.DatabasePathTempLinux;
+                        deviceNameJson = await LoadJsonDeviceNameAsync(parameters.DeviceNamePathLinux);
+                        deviceName = deviceNameJson.Name;
                     }
                     
                     string uri = parameters.Uri;                   
-                    string deviceName = parameters.DeviceName;
                     int sleepTime = parameters.SleepTime;
 
                     List<ValueModel> valueModels = new List<ValueModel>();
@@ -81,29 +86,47 @@ namespace LakeLabPiApp
 
             return parameters;
         }
-    }
 
-    public class Parameters
-    {
-        [JsonProperty("uri")]
-        public string Uri { get; set; }
+        private static async Task<DeviceName> LoadJsonDeviceNameAsync(string path)
+        {
+            DeviceName parameters = new DeviceName();
+            using (StreamReader r = new StreamReader(path))
+            {
+                string json = await r.ReadToEndAsync();
+                parameters = JsonConvert.DeserializeObject<DeviceName>(json);
+            }
 
-        [JsonProperty("databasePathDOWindows")]
-        public string DatabasePathDOWindows { get; set; }
+            return parameters;
+        }
 
-        [JsonProperty("databasePathTempWindows")]
-        public string DatabasePathTempWindows { get; set; }
+        private class Parameters
+        {
+            [JsonProperty("uri")]
+            public string Uri { get; set; }
 
-        [JsonProperty("databasePathDOLinux")]
-        public string DatabasePathDOLinux { get; set; }
+            [JsonProperty("databasePathDOWindows")]
+            public string DatabasePathDOWindows { get; set; }
 
-        [JsonProperty("databasePathTempLinux")]
-        public string DatabasePathTempLinux { get; set; }
+            [JsonProperty("databasePathTempWindows")]
+            public string DatabasePathTempWindows { get; set; }
 
-        [JsonProperty("deviceName")]
-        public string DeviceName { get; set; }
+            [JsonProperty("databasePathDOLinux")]
+            public string DatabasePathDOLinux { get; set; }
 
-        [JsonProperty("sleepTime")]
-        public int SleepTime { get; set; }
+            [JsonProperty("databasePathTempLinux")]
+            public string DatabasePathTempLinux { get; set; }
+
+            [JsonProperty("deviceNamePathLinux")]
+            public string DeviceNamePathLinux { get; set; }
+
+            [JsonProperty("sleepTime")]
+            public int SleepTime { get; set; }
+        }
+
+        private class DeviceName
+        {
+            [JsonProperty("deviceName")]
+            public string Name { get; set; }
+        }
     }
 }

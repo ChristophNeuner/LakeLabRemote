@@ -49,19 +49,6 @@ namespace LakeLabRemote.Controllers
             return View(model);         
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    List<Value> valuesToDelete = await _dbContext.Values.Where(v => v.Device.Id == id).ToListAsync();
-        //    _dbContext.Values.RemoveRange(valuesToDelete);
-        //    List<Device> devicesToDelete = await _dbContext.Devices.Where(p => p.Id == id).ToListAsync();
-        //    _dbContext.Devices.RemoveRange(devicesToDelete);
-        //    List<AppUserDevice> associationsToDelete = await _dbContext.AppUserDeviceAssociation.Where(p => p.DeviceId == id).ToListAsync();
-        //    _dbContext.AppUserDeviceAssociation.RemoveRange(associationsToDelete);
-        //    await _dbContext.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
         public IActionResult Edit(Guid id)
         {
             Device device = new Device();
@@ -104,6 +91,19 @@ namespace LakeLabRemote.Controllers
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(Guid id)
+        //{
+        //    List<Value> valuesToDelete = await _dbContext.Values.Where(v => v.Device.Id == id).ToListAsync();
+        //    _dbContext.Values.RemoveRange(valuesToDelete);
+        //    List<Device> devicesToDelete = await _dbContext.Devices.Where(p => p.Id == id).ToListAsync();
+        //    _dbContext.Devices.RemoveRange(devicesToDelete);
+        //    List<AppUserDevice> associationsToDelete = await _dbContext.AppUserDeviceAssociation.Where(p => p.DeviceId == id).ToListAsync();
+        //    _dbContext.AppUserDeviceAssociation.RemoveRange(associationsToDelete);
+        //    await _dbContext.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
 
     }
 }
