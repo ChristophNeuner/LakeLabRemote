@@ -6,6 +6,7 @@
     //$("#index-refresh").click(function () {
     //    main();
     //});
+
     $("#numberOfDaysInput").on('input', function () {
         main();
     });
