@@ -66,6 +66,7 @@ function getSensorDataForDeviceForTheLastNDaysAndDrawGraphs(deviceWrapper)
                             n++;
                         });
                         //$.plot($(deviceWrapper.htmlElementRef).find(".graph-do"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.%y %H:%M" } });
+                        console.log(values);
                         $.plot($(deviceWrapper.htmlElementRef).find(".graph-do"), [values], { xaxis: { mode: "time", timeformat: "%d.%m.\n%H:%M" } });
                     }
                 });

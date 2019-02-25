@@ -1,4 +1,4 @@
-FROM microsoft/aspnetcore:2.0
+FROM microsoft/aspnetcore:2.1
 COPY bin/Release/PublishOutput /app
 WORKDIR /app
 EXPOSE 80/tcp
