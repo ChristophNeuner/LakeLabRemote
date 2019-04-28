@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Sensoren";
+}
+@model List<Sensor>
+
+<div class="panel-body bg-primary "><h4>Sensoren</h4></div>
+<table class="table table-condensed table-bordered">
+    <tr><th>Gerät</th><th>Erstellungszeitpunkt</th><th>Gewässer</th><th>Ort</th><th>Tiefe</th><th>raspberry pi</th></tr>
+    @if (Model.Count == 0)
+    {
+        <tr><td colspan="6" class="text-center">Keine Geräte eingetragen.</td></tr>
+    }
+    else
+    {
+        @foreach (Sensor sensor in Model)
+        {
+            <tr>
+                <td>@sensor?.Name</td>
+                <td>@sensor?.TimeOfCreation</td>
+                <td>@sensor?.Lake</td>
+                <td>@sensor?.Location</td>
+                <td>@sensor?.Depth</td>
+                <td>@sensor?.Device?.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@sensor?.Id" class="btn btn-primary btn-sm">Edit</a>
+                    @*<form asp-action="Delete" method="post" asp-route-id="@device.Id">
+                            <a asp-action="Edit" asp-route-id="@device.Id" class="btn btn-primary btn-sm">Edit</a>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>*@
+                </td>
+            </tr>
+        }
+    }
+</table>
+<a class="btn btn-primary" asp-action="CreateSensor">Erstelle Sensor</a>

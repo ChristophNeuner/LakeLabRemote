@@ -36,6 +36,7 @@ namespace LakeLabRemote.Models
         public float Data { get; set; }
         public Enums.SensorTypes SensorType { get; set; }
         public string DataUnit { get; set; }
+        public Sensor Sensor { get; set; }
 
         public static bool operator ==(Value a, Value b)
         {
@@ -46,13 +47,13 @@ namespace LakeLabRemote.Models
             }
 
             // If one is null, but not both, return false.
-            if (((object)a == null) || ((object)b == null))
+            if ((a is null) || (b is null))
             {
                 return false;
             }
 
             // Return true if the fields match:
-            return a.Timestamp == b.Timestamp && a.Device == b.Device && a.Data == b.Data && a.SensorType == b.SensorType;
+            return a.Timestamp == b.Timestamp && a.Device == b.Device && a.Data == b.Data && a.SensorType == b.SensorType && a.Sensor == b.Sensor;
         }
 
         public static bool operator !=(Value a, Value b)
