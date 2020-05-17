@@ -22,11 +22,15 @@ namespace LakeLabPiApp
                 {
                     var selectCommand = connection.CreateCommand();
                     selectCommand.Transaction = transaction;
-                    if(databasePath.Contains("DO"))
+                    if(databasePath.Contains("DO(1).sqlite"))
+                    {
+                        selectCommand.CommandText = "SELECT timestamp, val1 FROM 'DO(1)'";
+                    }
+                    if (databasePath.Contains("DO.sqlite"))
                     {
                         selectCommand.CommandText = "SELECT timestamp, val1 FROM DO";
                     }
-                    else
+                    if (databasePath.Contains("RTD.sqlite"))
                     {
                         selectCommand.CommandText = "SELECT timestamp, val1 FROM RTD";
                     }
